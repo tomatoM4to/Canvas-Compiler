@@ -1,0 +1,9 @@
+yarn.lock
+package-lock.json
+
+.env
+
+dist/
+node_modules/
+.vscode/
+.idea/
