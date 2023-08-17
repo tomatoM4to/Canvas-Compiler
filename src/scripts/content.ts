@@ -1,8 +1,10 @@
+// @ts-ignore
+import palette from "@/templates/palette.html";
+
 const form = document.querySelector('form');
 
 if (form) {
-    const btn = document.createElement("button");
-    btn.innerHTML = "test";
-    btn.addEventListener("click", () => alert("success"))
-    form.insertAdjacentElement("afterend", btn);
+    const divElement = document.createElement('div');
+    divElement.innerHTML = palette;
+    form.insertAdjacentElement("afterend", divElement);
 }
