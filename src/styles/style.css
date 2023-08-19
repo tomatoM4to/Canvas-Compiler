@@ -10,7 +10,7 @@
 }
 
 #cc-palette-moving-icon {
-    cursor: grab;
+    cursor: move;
     width: 15px;
     height: 15px;
 }
