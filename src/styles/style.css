@@ -47,10 +47,18 @@
 }
 
 
-#cc-color-selector {
-    background: #26B99A;
-    border-radius: 100%;
-    margin: 0 2px;
+#cc-color-picker {
     width: 33px;
     height: 33px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: none;
+}
+
+#cc-color-picker::-webkit-color-swatch {
+    border-radius: 12px;
+    border: 1px lightgray solid;
 }
