@@ -1,8 +1,10 @@
 export function dragPalette(element: HTMLElement, dragzone: HTMLElement) {
-    let pos1 = 0;
-    let pos2 = 0;
-    let pos3 = 0;
-    let pos4 = 0;
+    let beforeX = 0;
+    let beforeY = 0;
+    let dx = 0;
+    let dy = 0;
+    let ny = 0;
+    let nx = 0;
 
     function dragMouseUp() {
         document.removeEventListener("mouseup", dragMouseUp);
@@ -13,19 +15,26 @@ export function dragPalette(element: HTMLElement, dragzone: HTMLElement) {
 
     function dragMouseMove(event: any) {
         event.preventDefault();
-        pos1 = pos3 - event.clientX;
-        pos2 = pos4 - event.clientY;
-        pos3 = event.clientX;
-        pos4 = event.clientY;
-        element.style.top = `${element.offsetTop - pos2}px`;
-        element.style.right = `${window.innerWidth - (element.offsetLeft + element.offsetWidth) + pos1}px`;
+        dx = beforeX - event.clientX;
+        dy = beforeY - event.clientY;
+        beforeX = event.clientX;
+        beforeY = event.clientY;
+
+        ny = element.offsetTop - dy < 0 ? 0 : element.offsetTop - dy;
+        ny = window.innerHeight - element.offsetHeight < ny ? window.innerHeight - element.offsetHeight : ny;
+
+        nx = window.innerWidth - (element.offsetLeft + element.offsetWidth) + dx < 0 ? 0 : window.innerWidth - (element.offsetLeft + element.offsetWidth) + dx;
+        nx = element.offsetLeft < 0 ? window.innerWidth - element.offsetWidth : nx;
+
+        element.style.top = `${ny}px`;
+        element.style.right = `${nx}px`;
     }
 
     function dragMouseDown(event: any) {
         event.preventDefault();
 
-        pos3 = event.clientX;
-        pos4 = event.clientY;
+        beforeX = event.clientX;
+        beforeY = event.clientY;
 
         element.classList.add("cc-palette-container-moving")
         document.addEventListener("mouseup", dragMouseUp);
