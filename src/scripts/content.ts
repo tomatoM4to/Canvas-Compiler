@@ -1,18 +1,22 @@
 // @ts-ignore
-import palette from "@/templates/palette.html";
+import paletteTemplate from "@/templates/palette.html";
 import "@/styles/style.css"
 import {dragPalette} from "@/components/dragPalette";
 
-const form = document.querySelector('body');
+// dom be injected
+const body = document.querySelector('body');
 
-if (form) {
-    const divElement = document.createElement('div');
-    divElement.innerHTML = palette;
+// palette
+const palette = document.createElement('div');
+palette.innerHTML = paletteTemplate;
 
-    const movingButton = divElement.querySelector("#cc-palette-moving-icon") as HTMLElement;
-    const paletteContainer = divElement.querySelector(".cc-palette-container") as HTMLElement;
+// palette elements
+const movingButton = palette.querySelector("#cc-palette-moving-icon") as HTMLElement;
+const paletteContainer = palette.querySelector(".cc-palette-container") as HTMLElement;
+
+
+if (body) {
     dragPalette(paletteContainer, movingButton);
-
-    form.insertAdjacentElement("afterend", divElement);
+    body.insertAdjacentElement("afterend", palette);
 }
 

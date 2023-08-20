@@ -9,6 +9,10 @@
     align-items: center;
 }
 
+.cc-palette-container-moving {
+    border: 2px white solid;
+}
+
 #cc-palette-moving-icon {
     cursor: move;
     width: 15px;
