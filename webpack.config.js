@@ -7,6 +7,8 @@ module.exports = {
     // mode: "development",
     entry: {
         popup: path.resolve(__dirname, "src", "scripts", "popup.ts"),
+        background: path.resolve(__dirname, "src", "scripts", "background.ts"),
+        content: path.resolve(__dirname, "src", "scripts", "content.ts"),
     },
     output: {
         path: path.join(__dirname, "dist"),
@@ -28,7 +30,11 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
-            }
+            },
+            {
+                test: /\.html$/i,
+                loader: "html-loader",
+            },
         ],
     },
     plugins: [
