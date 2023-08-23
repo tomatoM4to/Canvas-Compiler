@@ -6,6 +6,8 @@ import canvasTemplate from  "@/templates/canvas.html";
 import "@/styles/style.css"
 import {dragPalette} from "@/components/dragPalette";
 import Konva from "konva";
+import {mousedownHandler, mousemoveHandler, mouseupHandler} from "@/components/drawing";
+import {Stage} from "konva/lib/Stage";
 
 // dom be injected
 const body = document.querySelector('body') as HTMLElement;
@@ -30,46 +32,17 @@ body.insertAdjacentElement("afterend", palette);
 let width = window.innerWidth;
 let height = window.innerHeight;
 
-let stage = new Konva.Stage({
+export let stage: Stage = new Konva.Stage({
     container: 'canvas-compiler',
     width: width,
     height: height,
 });
 
-let layer = new Konva.Layer();
+export let layer = new Konva.Layer();
 
-let rect1 = new Konva.Rect({
-    x: 20,
-    y: 20,
-    width: 100,
-    height: 50,
-    fill: 'green',
-    stroke: 'black',
-    strokeWidth: 4,
-});
-// add the shape to the layer
-layer.add(rect1);
-
-let rect2 = new Konva.Rect({
-    x: 150,
-    y: 40,
-    width: 100,
-    height: 50,
-    fill: 'red',
-    shadowBlur: 10,
-    cornerRadius: 10,
-});
-layer.add(rect2);
-
-let rect3 = new Konva.Rect({
-    x: 50,
-    y: 120,
-    width: 100,
-    height: 100,
-    fill: 'blue',
-    cornerRadius: [0, 10, 20, 30],
-});
-layer.add(rect3);
+stage.on("mousedown", mousedownHandler)
+stage.on("mousemove", mousemoveHandler)
+stage.on("mouseup", mouseupHandler)
 
 stage.add(layer);
 
