@@ -17,19 +17,30 @@ palette.innerHTML = paletteTemplate;
 const movingButton = palette.querySelector("#cc-palette-moving-icon") as HTMLElement;
 const paletteContainer = palette.querySelector(".cc-palette-container") as HTMLElement;
 
+
 const main = document.querySelector('main') as HTMLElement;
 const canvas = document.createElement('div');
 canvas.innerHTML = canvasTemplate;
+main.insertAdjacentElement("afterend", canvas);
 
 
-
-if (body) {
-    dragPalette(paletteContainer, movingButton);
-    body.insertAdjacentElement("afterend", palette);
-}
+dragPalette(paletteContainer, movingButton);
+body.insertAdjacentElement("afterend", palette);
 
 
-window.onload = () => {
-    main.insertAdjacentElement("afterend", canvas);
-}
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (request.greeting === "hello") {
+            sendResponse({farewell: "goodbye"});
+            setTimeout(() => {
+                const main = document.querySelector('main') as HTMLElement;
+                const canvas = document.createElement('div');
+                canvas.innerHTML = canvasTemplate;
+                main.insertAdjacentElement("afterend", canvas);
+            }, 1500);
+        }
+    }
+);
+
+
 console.log("content injected")
