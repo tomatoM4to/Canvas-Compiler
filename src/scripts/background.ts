@@ -2,8 +2,15 @@
 chrome.webNavigation.onHistoryStateUpdated.addListener(
     async () => {
         const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
-        // @ts-ignore
-        const response = await chrome.tabs.sendMessage(tab.id, {greeting: "hello"});
-        console.log(response);
+        if (tab.status === "complete") {
+            // @ts-ignore
+            chrome.tabs.sendMessage(tab.id, {greeting: "hello"}, (response) => {
+                if (chrome.runtime.lastError) {
+                    console.error(chrome.runtime.lastError.message);
+                } else {
+                    console.log(response);
+                }
+            });
+        }
     }
-)
+);
