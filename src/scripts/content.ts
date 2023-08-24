@@ -9,6 +9,7 @@ import Konva from "konva";
 import {mousedownHandler, mousemoveHandler, mouseupHandler} from "@/components/drawing";
 import {Stage} from "konva/lib/Stage";
 import {RefreshKonva} from "@/components/load_konva";
+import PalleteState from "@/components/pallete_state";
 
 // dom be injected
 const body = document.querySelector('body') as HTMLElement;
@@ -30,8 +31,34 @@ dragPalette(paletteContainer, movingButton);
 body.insertAdjacentElement("afterend", palette);
 
 
-let width = window.innerWidth;
-let height = window.innerHeight;
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+
+export const pallete_state = new PalleteState();
+
+const cursorIcon = document.querySelector("#cursor");
+cursorIcon?.addEventListener("click", () => {
+    pallete_state.changeFeature("cursor");
+    console.log(pallete_state);
+})
+
+
+const layoutIcon = document.querySelector("#layout");
+layoutIcon?.addEventListener("click", () => {
+    pallete_state.changeFeature("layout");
+    console.log(pallete_state);
+})
+
+
+const colorPicker = document?.querySelector("#cc-color-picker");
+colorPicker?.addEventListener('input', (e) => {
+    // @ts-ignore
+    pallete_state.changeColor(e.target.value);
+    console.log(pallete_state);
+})
+
+
 
 export let stage: Stage = new Konva.Stage({
     container: 'canvas-compiler',

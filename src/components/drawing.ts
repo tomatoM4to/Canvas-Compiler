@@ -1,5 +1,5 @@
 import Konva from "konva";
-import {layer, stage} from "@/scripts/content";
+import {layer, pallete_state, stage} from "@/scripts/content";
 
 // @ts-ignore
 let rect = null;
@@ -14,8 +14,9 @@ export function mousedownHandler() {
         y: stage.getPointerPosition().y,
         width: 0,
         height: 0,
-        fill: "lightblue",
-        stroke: "blue"
+        fill: pallete_state.getColor(),
+        stroke: "blue",
+        draggable: false,
     })
     layer.add(rect).batchDraw();
 }
