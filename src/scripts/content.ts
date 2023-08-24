@@ -8,6 +8,7 @@ import {dragPalette} from "@/components/dragPalette";
 import Konva from "konva";
 import {mousedownHandler, mousemoveHandler, mouseupHandler} from "@/components/drawing";
 import {Stage} from "konva/lib/Stage";
+import {RefreshKonva} from "@/components/load_konva";
 
 // dom be injected
 const body = document.querySelector('body') as HTMLElement;
@@ -55,6 +56,13 @@ chrome.runtime.onMessage.addListener(
                 const canvas = document.createElement('div');
                 canvas.innerHTML = canvasTemplate;
                 main.insertAdjacentElement("afterend", canvas);
+                stage = new Konva.Stage({
+                    container: 'canvas-compiler',
+                    width: width,
+                    height: height,
+                });
+                layer = new Konva.Layer();
+                RefreshKonva();
             }, 1500);
         }
     }
