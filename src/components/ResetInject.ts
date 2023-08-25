@@ -3,10 +3,10 @@ export class CanvasCompilerElements {
 
     private _width: number;
     private _height: number;
-    private _body: HTMLElement | null;
-    private _main: HTMLElement | null;
-    private _palette: HTMLElement | null;
-    private _canvas: HTMLElement | null;
+    private body: HTMLElement | null;
+    private main: HTMLElement | null;
+    private palette: HTMLElement | null;
+    private canvas: HTMLElement | null;
 
     private paletteMovingButton: HTMLElement | null;
     private paletteContainer: HTMLElement | null;
@@ -14,10 +14,10 @@ export class CanvasCompilerElements {
     private constructor() {
         this._width = window.innerWidth;
         this._height = window.innerHeight;
-        this._body = document.querySelector('body');
-        this._main = document.querySelector('main');
-        this._palette = document.createElement('div');
-        this._canvas = document.createElement('div');
+        this.body = document.querySelector('body');
+        this.main = document.querySelector('main');
+        this.palette = document.createElement('div');
+        this.canvas = document.createElement('div');
         this.paletteMovingButton = null;
         this.paletteContainer = null;
     }
@@ -30,18 +30,18 @@ export class CanvasCompilerElements {
     }
 
     resetPaletteTemplate(a: string) {
-        if (this._palette) {
-            this._palette.innerHTML = a;
-            this.paletteMovingButton = this._palette.querySelector("#cc-palette-moving-icon");
-            this.paletteContainer = this._palette.querySelector(".cc-palette-container");
+        if (this.palette) {
+            this.palette.innerHTML = a;
+            this.paletteMovingButton = this.palette.querySelector("#cc-palette-moving-icon");
+            this.paletteContainer = this.palette.querySelector(".cc-palette-container");
             if (this.paletteContainer && this.paletteMovingButton)
                 this.dragEventListener(this.paletteContainer, this.paletteMovingButton);
         }
     }
 
     resetCanvasTemplate(a: string) {
-        if (this._canvas) {
-            this._canvas.innerHTML = a;
+        if (this.canvas) {
+            this.canvas.innerHTML = a;
         }
     }
 
@@ -92,10 +92,10 @@ export class CanvasCompilerElements {
     }
 
     injectContent() {
-        if (this._main && this._canvas)
-            this._main.insertAdjacentElement("afterend", this._canvas);
-        if (this._body && this._palette)
-            this._body.insertAdjacentElement("afterend", this._palette);
+        if (this.main && this.canvas)
+            this.main.insertAdjacentElement("afterend", this.canvas);
+        if (this.body && this.palette)
+            this.body.insertAdjacentElement("afterend", this.palette);
     }
     get width(): number {
         return this._width;

@@ -5,17 +5,16 @@ import Konva from "konva";
 import {mousedownHandler, mousemoveHandler, mouseupHandler} from "@/components/drawing";
 import {Stage} from "konva/lib/Stage";
 import PalleteState from "@/components/pallete_state";
-import {CanvasCompilerElements} from "@/components/InitialState";
+import {CanvasCompilerElements} from "@/components/ResetInject";
 
-
+/* 초기화, 컨텐츠 주입 */
 export const canvasCompiler: CanvasCompilerElements = CanvasCompilerElements.getInstance();
 canvasCompiler.resetPaletteTemplate(paletteTemplate);
 canvasCompiler.resetCanvasTemplate(canvasTemplate);
 canvasCompiler.injectContent();
 
 
-//////////////////////////////////////////////////////////////////////////
-
+/* 도구 선택 */
 export const pallete_state = new PalleteState();
 
 const cursorIcon: HTMLElement | null = document.querySelector("#cursor");
@@ -39,11 +38,7 @@ colorPicker?.addEventListener('input', (e) => {
     console.log(pallete_state);
 })
 
-
-//////////////////////////////////////////////////////////////////////////
-
-
-
+/* Konva 세팅 */
 export let stage: Stage = new Konva.Stage({
     container: 'canvas-compiler',
     width: canvasCompiler.width,
@@ -62,16 +57,6 @@ chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.greeting === "hello") {
             sendResponse({farewell: "goodbye"});
-            // canvasCompiler.main = document.querySelector('main') as HTMLElement;
-            // if (canvasCompiler.main && canvasCompiler.canvas)
-            //     canvasCompiler.main.insertAdjacentElement("afterend", canvasCompiler.canvas);
-            // stage = new Konva.Stage({
-            //     container: 'canvas-compiler',
-            //     width: canvasCompiler.width,
-            //     height: canvasCompiler.height,
-            // });
-            // layer = new Konva.Layer();
-            // RefreshKonva();
         }
     }
 );
