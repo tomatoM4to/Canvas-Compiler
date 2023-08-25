@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: "production",
     // mode: "development",
+    watch: true,
     entry: {
         popup: path.resolve(__dirname, "src", "scripts", "popup.ts"),
         background: path.resolve(__dirname, "src", "scripts", "background.ts"),
