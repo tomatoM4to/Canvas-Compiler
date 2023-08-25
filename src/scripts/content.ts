@@ -1,8 +1,6 @@
 import paletteTemplate from "@/templates/palette.html";
 import canvasTemplate from  "@/templates/canvas.html";
-
 import "@/styles/style.css"
-import {dragPalette} from "@/components/dragPalette";
 import Konva from "konva";
 import {mousedownHandler, mousemoveHandler, mouseupHandler} from "@/components/drawing";
 import {Stage} from "konva/lib/Stage";
@@ -10,15 +8,11 @@ import {RefreshKonva} from "@/components/load_konva";
 import PalleteState from "@/components/pallete_state";
 import {CanvasCompilerElements} from "@/components/InitialState";
 
+
 export const canvasCompiler: CanvasCompilerElements = CanvasCompilerElements.getInstance();
 canvasCompiler.resetPaletteTemplate(paletteTemplate);
 canvasCompiler.resetCanvasTemplate(canvasTemplate);
 
-if (canvasCompiler.palette) {
-    const movingButton: HTMLElement = canvasCompiler.palette.querySelector("#cc-palette-moving-icon") as HTMLElement;
-    const paletteContainer: HTMLElement = canvasCompiler.palette.querySelector(".cc-palette-container") as HTMLElement;
-    dragPalette(paletteContainer, movingButton);
-}
 
 if (canvasCompiler.main && canvasCompiler.canvas)
     canvasCompiler.main.insertAdjacentElement("afterend", canvasCompiler.canvas);
