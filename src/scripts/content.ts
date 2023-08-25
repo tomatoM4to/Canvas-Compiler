@@ -4,7 +4,6 @@ import "@/styles/style.css"
 import Konva from "konva";
 import {mousedownHandler, mousemoveHandler, mouseupHandler} from "@/components/drawing";
 import {Stage} from "konva/lib/Stage";
-import {RefreshKonva} from "@/components/load_konva";
 import PalleteState from "@/components/pallete_state";
 import {CanvasCompilerElements} from "@/components/InitialState";
 
@@ -71,16 +70,16 @@ chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.greeting === "hello") {
             sendResponse({farewell: "goodbye"});
-            canvasCompiler.main = document.querySelector('main') as HTMLElement;
-            if (canvasCompiler.main && canvasCompiler.canvas)
-                canvasCompiler.main.insertAdjacentElement("afterend", canvasCompiler.canvas);
-            stage = new Konva.Stage({
-                container: 'canvas-compiler',
-                width: canvasCompiler.width,
-                height: canvasCompiler.height,
-            });
-            layer = new Konva.Layer();
-            RefreshKonva();
+            // canvasCompiler.main = document.querySelector('main') as HTMLElement;
+            // if (canvasCompiler.main && canvasCompiler.canvas)
+            //     canvasCompiler.main.insertAdjacentElement("afterend", canvasCompiler.canvas);
+            // stage = new Konva.Stage({
+            //     container: 'canvas-compiler',
+            //     width: canvasCompiler.width,
+            //     height: canvasCompiler.height,
+            // });
+            // layer = new Konva.Layer();
+            // RefreshKonva();
         }
     }
 );
