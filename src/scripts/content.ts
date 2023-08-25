@@ -10,40 +10,42 @@ import {RefreshKonva} from "@/components/load_konva";
 import PalleteState from "@/components/pallete_state";
 import {CanvasCompilerElements} from "@/components/InitialState";
 
-export const canvasCompilerElements = new CanvasCompilerElements(paletteTemplate);
+export const canvasCompiler: CanvasCompilerElements = new CanvasCompilerElements(paletteTemplate, canvasTemplate);
 
 
-if (canvasCompilerElements.palette) {
-    const movingButton = canvasCompilerElements.palette.querySelector("#cc-palette-moving-icon") as HTMLElement;
-    const paletteContainer = canvasCompilerElements.palette.querySelector(".cc-palette-container") as HTMLElement;
+if (canvasCompiler.palette) {
+    const movingButton: HTMLElement = canvasCompiler.palette.querySelector("#cc-palette-moving-icon") as HTMLElement;
+    const paletteContainer: HTMLElement = canvasCompiler.palette.querySelector(".cc-palette-container") as HTMLElement;
     dragPalette(paletteContainer, movingButton);
 }
 
-let main = document.querySelector('main') as HTMLElement;
-const canvas = document.createElement('div');
-canvas.innerHTML = canvasTemplate;
-main.insertAdjacentElement("afterend", canvas);
-// @ts-ignore
-canvasCompilerElements.body.insertAdjacentElement("afterend", canvasCompilerElements.palette);
+if (canvasCompiler.main && canvasCompiler.canvas)
+    canvasCompiler.main.insertAdjacentElement("afterend", canvasCompiler.canvas);
 
+if (canvasCompiler.body && canvasCompiler.palette)
+    canvasCompiler.body.insertAdjacentElement("afterend", canvasCompiler.palette);
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 export const pallete_state = new PalleteState();
 
-const cursorIcon = document.querySelector("#cursor");
+const cursorIcon: HTMLElement | null = document.querySelector("#cursor");
 cursorIcon?.addEventListener("click", () => {
     pallete_state.changeFeature("cursor");
     console.log(pallete_state);
 })
 
 
-const layoutIcon = document.querySelector("#layout");
+const layoutIcon: HTMLElement | null = document.querySelector("#layout");
 layoutIcon?.addEventListener("click", () => {
     pallete_state.changeFeature("layout");
     console.log(pallete_state);
 })
 
 
-const colorPicker = document?.querySelector("#cc-color-picker");
+const colorPicker: HTMLElement | null = document?.querySelector("#cc-color-picker");
 colorPicker?.addEventListener('input', (e) => {
     // @ts-ignore
     pallete_state.changeColor(e.target.value);
@@ -51,11 +53,15 @@ colorPicker?.addEventListener('input', (e) => {
 })
 
 
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
 
 export let stage: Stage = new Konva.Stage({
     container: 'canvas-compiler',
-    width: canvasCompilerElements.width,
-    height: canvasCompilerElements.height,
+    width: canvasCompiler.width,
+    height: canvasCompiler.height,
 });
 
 export let layer = new Konva.Layer();
@@ -71,13 +77,13 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting === "hello") {
             sendResponse({farewell: "goodbye"});
             setTimeout(() => {
-                main = document.querySelector('main') as HTMLElement;
-                canvas.innerHTML = canvasTemplate;
-                main.insertAdjacentElement("afterend", canvas);
+                canvasCompiler.main = document.querySelector('main') as HTMLElement;
+                if (canvasCompiler.main && canvasCompiler.canvas)
+                    canvasCompiler.main.insertAdjacentElement("afterend", canvasCompiler.canvas);
                 stage = new Konva.Stage({
                     container: 'canvas-compiler',
-                    width: canvasCompilerElements.width,
-                    height: canvasCompilerElements.height,
+                    width: canvasCompiler.width,
+                    height: canvasCompiler.height,
                 });
                 layer = new Konva.Layer();
                 RefreshKonva();
