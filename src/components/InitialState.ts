@@ -104,24 +104,4 @@ export class CanvasCompilerElements {
     get height(): number {
         return this._height;
     }
-
-    get body(): HTMLElement | null {
-        return this._body;
-    }
-
-    get main(): HTMLElement | null {
-        return this._main;
-    }
-
-    get palette(): HTMLElement | null {
-        return this._palette;
-    }
-
-    get canvas(): HTMLElement | null {
-        return this._canvas;
-    }
-
-    set main(value: HTMLElement | null) {
-        this._main = value;
-    }
 }
