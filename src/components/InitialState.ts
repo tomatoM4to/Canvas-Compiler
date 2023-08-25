@@ -1,7 +1,6 @@
 export class CanvasCompilerElements {
-    set main(value: HTMLElement | null) {
-        this._main = value;
-    }
+    private static instance: CanvasCompilerElements;
+
     private _width: number;
     private _height: number;
     private _body: HTMLElement | null;
@@ -9,15 +8,30 @@ export class CanvasCompilerElements {
     private _palette: HTMLElement | null;
     private _canvas: HTMLElement | null;
 
-    constructor(paletteTemplate: string, canvasTemplate: string) {
+    private constructor() {
         this._width = window.innerWidth;
         this._height = window.innerHeight;
         this._body = document.querySelector('body');
         this._main = document.querySelector('main');
         this._palette = document.createElement('div');
-        this._palette.innerHTML = paletteTemplate;
         this._canvas = document.createElement('div');
-        this._canvas.innerHTML = canvasTemplate;
+    }
+
+    public static getInstance() {
+        if (!CanvasCompilerElements.instance) {
+            CanvasCompilerElements.instance = new CanvasCompilerElements();
+        }
+        return CanvasCompilerElements.instance
+    }
+
+    resetPaletteTemplate(a: string) {
+        if (this._palette) this._palette.innerHTML = a;
+    }
+
+    resetCanvasTemplate(a: string) {
+        if (this._canvas) {
+            this._canvas.innerHTML = a;
+        }
     }
 
     get width(): number {
@@ -42,5 +56,9 @@ export class CanvasCompilerElements {
 
     get canvas(): HTMLElement | null {
         return this._canvas;
+    }
+
+    set main(value: HTMLElement | null) {
+        this._main = value;
     }
 }

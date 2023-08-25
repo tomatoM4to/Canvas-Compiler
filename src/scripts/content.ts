@@ -10,8 +10,9 @@ import {RefreshKonva} from "@/components/load_konva";
 import PalleteState from "@/components/pallete_state";
 import {CanvasCompilerElements} from "@/components/InitialState";
 
-export const canvasCompiler: CanvasCompilerElements = new CanvasCompilerElements(paletteTemplate, canvasTemplate);
-
+export const canvasCompiler: CanvasCompilerElements = CanvasCompilerElements.getInstance();
+canvasCompiler.resetPaletteTemplate(paletteTemplate);
+canvasCompiler.resetCanvasTemplate(canvasTemplate);
 
 if (canvasCompiler.palette) {
     const movingButton: HTMLElement = canvasCompiler.palette.querySelector("#cc-palette-moving-icon") as HTMLElement;
