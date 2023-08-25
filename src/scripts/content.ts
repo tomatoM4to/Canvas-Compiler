@@ -1,6 +1,4 @@
-// @ts-ignore
 import paletteTemplate from "@/templates/palette.html";
-// @ts-ignore
 import canvasTemplate from  "@/templates/canvas.html";
 
 import "@/styles/style.css"
@@ -12,14 +10,10 @@ import {RefreshKonva} from "@/components/load_konva";
 import PalleteState from "@/components/pallete_state";
 import {CanvasCompilerElements} from "@/components/InitialState";
 
-
-
-export const canvasCompilerElements = new CanvasCompilerElements();
+export const canvasCompilerElements = new CanvasCompilerElements(paletteTemplate);
 
 
 if (canvasCompilerElements.palette) {
-    // @ts-ignore
-    canvasCompilerElements.palette?.innerHTML = paletteTemplate;
     const movingButton = canvasCompilerElements.palette.querySelector("#cc-palette-moving-icon") as HTMLElement;
     const paletteContainer = canvasCompilerElements.palette.querySelector(".cc-palette-container") as HTMLElement;
     dragPalette(paletteContainer, movingButton);
