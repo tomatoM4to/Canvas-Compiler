@@ -1,8 +1,10 @@
+import {CanvasCompilerElements} from "@/components/ResetInject";
+
 export default class PalleteState{
     private feature: string;
     private color: string;
 
-    constructor() {
+    constructor(canvasCompiler: CanvasCompilerElements) {
         this.feature = 'cursor';
         this.color = '#ffff';
     }

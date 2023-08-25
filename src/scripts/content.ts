@@ -1,11 +1,9 @@
 import paletteTemplate from "@/templates/palette.html";
 import canvasTemplate from  "@/templates/canvas.html";
 import "@/styles/style.css"
-import Konva from "konva";
-import {mousedownHandler, mousemoveHandler, mouseupHandler} from "@/components/drawing";
-import {Stage} from "konva/lib/Stage";
 import PalleteState from "@/components/pallete_state";
 import {CanvasCompilerElements} from "@/components/ResetInject";
+import KonvaSettings from "@/components/KonvaSetting";
 
 /* 초기화, 컨텐츠 주입 */
 export const canvasCompiler: CanvasCompilerElements = CanvasCompilerElements.getInstance();
@@ -15,7 +13,7 @@ canvasCompiler.injectContent();
 
 
 /* 도구 선택 */
-export const pallete_state = new PalleteState();
+export const pallete_state = new PalleteState(CanvasCompilerElements.getInstance());
 
 const cursorIcon: HTMLElement | null = document.querySelector("#cursor");
 cursorIcon?.addEventListener("click", () => {
@@ -39,19 +37,8 @@ colorPicker?.addEventListener('input', (e) => {
 })
 
 /* Konva 세팅 */
-export let stage: Stage = new Konva.Stage({
-    container: 'canvas-compiler',
-    width: canvasCompiler.width,
-    height: canvasCompiler.height,
-});
+export const konvaSettings: KonvaSettings = KonvaSettings.getInstance();
 
-export let layer = new Konva.Layer();
-
-stage.on("mousedown", mousedownHandler)
-stage.on("mousemove", mousemoveHandler)
-stage.on("mouseup", mouseupHandler)
-
-stage.add(layer);
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {

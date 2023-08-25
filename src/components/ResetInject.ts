@@ -22,7 +22,7 @@ export class CanvasCompilerElements {
         this.paletteContainer = null;
     }
 
-    public static getInstance() {
+    public static getInstance(): CanvasCompilerElements {
         if (!CanvasCompilerElements.instance) {
             CanvasCompilerElements.instance = new CanvasCompilerElements();
         }
@@ -45,7 +45,7 @@ export class CanvasCompilerElements {
         }
     }
 
-    private dragEventListener(element: HTMLElement, dragzone: HTMLElement) {
+    private dragEventListener(element: HTMLElement, dragzone: HTMLElement): void {
         let beforeX = 0;
         let beforeY = 0;
         let dx = 0;
