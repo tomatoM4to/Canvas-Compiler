@@ -10,29 +10,27 @@ import {mousedownHandler, mousemoveHandler, mouseupHandler} from "@/components/d
 import {Stage} from "konva/lib/Stage";
 import {RefreshKonva} from "@/components/load_konva";
 import PalleteState from "@/components/pallete_state";
+import {CanvasCompilerElements} from "@/components/InitialState";
 
-// dom be injected
-const body = document.querySelector('body') as HTMLElement;
 
-// palette
-const palette = document.createElement('div');
-palette.innerHTML = paletteTemplate;
 
-// palette elements
-const movingButton = palette.querySelector("#cc-palette-moving-icon") as HTMLElement;
-const paletteContainer = palette.querySelector(".cc-palette-container") as HTMLElement;
+export const canvasCompilerElements = new CanvasCompilerElements();
 
-// initial inject
-const main = document.querySelector('main') as HTMLElement;
+
+if (canvasCompilerElements.palette) {
+    // @ts-ignore
+    canvasCompilerElements.palette?.innerHTML = paletteTemplate;
+    const movingButton = canvasCompilerElements.palette.querySelector("#cc-palette-moving-icon") as HTMLElement;
+    const paletteContainer = canvasCompilerElements.palette.querySelector(".cc-palette-container") as HTMLElement;
+    dragPalette(paletteContainer, movingButton);
+}
+
+let main = document.querySelector('main') as HTMLElement;
 const canvas = document.createElement('div');
 canvas.innerHTML = canvasTemplate;
 main.insertAdjacentElement("afterend", canvas);
-dragPalette(paletteContainer, movingButton);
-body.insertAdjacentElement("afterend", palette);
-
-
-const width = window.innerWidth;
-const height = window.innerHeight;
+// @ts-ignore
+canvasCompilerElements.body.insertAdjacentElement("afterend", canvasCompilerElements.palette);
 
 
 export const pallete_state = new PalleteState();
@@ -62,8 +60,8 @@ colorPicker?.addEventListener('input', (e) => {
 
 export let stage: Stage = new Konva.Stage({
     container: 'canvas-compiler',
-    width: width,
-    height: height,
+    width: canvasCompilerElements.width,
+    height: canvasCompilerElements.height,
 });
 
 export let layer = new Konva.Layer();
@@ -79,14 +77,13 @@ chrome.runtime.onMessage.addListener(
         if (request.greeting === "hello") {
             sendResponse({farewell: "goodbye"});
             setTimeout(() => {
-                const main = document.querySelector('main') as HTMLElement;
-                const canvas = document.createElement('div');
+                main = document.querySelector('main') as HTMLElement;
                 canvas.innerHTML = canvasTemplate;
                 main.insertAdjacentElement("afterend", canvas);
                 stage = new Konva.Stage({
                     container: 'canvas-compiler',
-                    width: width,
-                    height: height,
+                    width: canvasCompilerElements.width,
+                    height: canvasCompilerElements.height,
                 });
                 layer = new Konva.Layer();
                 RefreshKonva();
