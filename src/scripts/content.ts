@@ -77,18 +77,16 @@ chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.greeting === "hello") {
             sendResponse({farewell: "goodbye"});
-            setTimeout(() => {
-                canvasCompiler.main = document.querySelector('main') as HTMLElement;
-                if (canvasCompiler.main && canvasCompiler.canvas)
-                    canvasCompiler.main.insertAdjacentElement("afterend", canvasCompiler.canvas);
-                stage = new Konva.Stage({
-                    container: 'canvas-compiler',
-                    width: canvasCompiler.width,
-                    height: canvasCompiler.height,
-                });
-                layer = new Konva.Layer();
-                RefreshKonva();
-            }, 1500);
+            canvasCompiler.main = document.querySelector('main') as HTMLElement;
+            if (canvasCompiler.main && canvasCompiler.canvas)
+                canvasCompiler.main.insertAdjacentElement("afterend", canvasCompiler.canvas);
+            stage = new Konva.Stage({
+                container: 'canvas-compiler',
+                width: canvasCompiler.width,
+                height: canvasCompiler.height,
+            });
+            layer = new Konva.Layer();
+            RefreshKonva();
         }
     }
 );
