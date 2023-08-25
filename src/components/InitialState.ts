@@ -91,7 +91,12 @@ export class CanvasCompilerElements {
         dragzone.addEventListener("mousedown", dragMouseDown);
     }
 
-
+    injectContent() {
+        if (this._main && this._canvas)
+            this._main.insertAdjacentElement("afterend", this._canvas);
+        if (this._body && this._palette)
+            this._body.insertAdjacentElement("afterend", this._palette);
+    }
     get width(): number {
         return this._width;
     }

@@ -11,16 +11,9 @@ import {CanvasCompilerElements} from "@/components/InitialState";
 export const canvasCompiler: CanvasCompilerElements = CanvasCompilerElements.getInstance();
 canvasCompiler.resetPaletteTemplate(paletteTemplate);
 canvasCompiler.resetCanvasTemplate(canvasTemplate);
+canvasCompiler.injectContent();
 
 
-if (canvasCompiler.main && canvasCompiler.canvas)
-    canvasCompiler.main.insertAdjacentElement("afterend", canvasCompiler.canvas);
-
-if (canvasCompiler.body && canvasCompiler.palette)
-    canvasCompiler.body.insertAdjacentElement("afterend", canvasCompiler.palette);
-
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
 export const pallete_state = new PalleteState();
@@ -48,8 +41,7 @@ colorPicker?.addEventListener('input', (e) => {
 
 
 //////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
+
 
 
 export let stage: Stage = new Konva.Stage({
