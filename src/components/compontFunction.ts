@@ -1,5 +1,6 @@
 import Konva from "konva";
-import {konvaSettings, pallete_state} from "@/scripts/content";
+import {konvaSettings} from "@/scripts/content";
+import {PaletteElements} from "@/components/ResetInject";
 
 // @ts-ignore
 let rect = null;
@@ -14,7 +15,7 @@ export function mousedownHandler() {
         y: konvaSettings.stage.getPointerPosition().y,
         width: 0,
         height: 0,
-        fill: pallete_state.getColor(),
+        fill: PaletteElements.getInstance().color,
         stroke: "blue",
         draggable: false,
     })
