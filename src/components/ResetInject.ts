@@ -1,3 +1,5 @@
+import {toolbar} from "@/scripts/content";
+
 export class CanvasElements {
     private static instance: CanvasElements;
 
@@ -58,6 +60,11 @@ export class PaletteElements {
     private paletteMovingButton: HTMLElement | null;
     private paletteContainer: HTMLElement | null;
     private colorPicker: HTMLElement | null;
+    private cursorButton: HTMLElement | null;
+    private layoutButton: HTMLElement | null;
+
+
+
     private _color: string;
 
     private constructor() {
@@ -67,6 +74,8 @@ export class PaletteElements {
         this.paletteContainer = null;
         this.colorPicker = null;
         this._color = "#fffff";
+        this.cursorButton = null;
+        this.layoutButton = null;
     }
 
     public static getInstance(): PaletteElements {
@@ -83,14 +92,22 @@ export class PaletteElements {
             this.paletteContainer = this.palette.querySelector(".cc-palette-container");
             if (this.paletteContainer && this.paletteMovingButton)
                 this.dragEventListener(this.paletteContainer, this.paletteMovingButton);
-            if (this.palette) {
-                this.colorPicker = this.palette.querySelector("#cc-color-picker");
-                this.colorPicker?.addEventListener('input', (e) => {
-                    // @ts-ignore;
-                    this._color = e.target.value;
-                })
-            }
 
+            this.colorPicker = this.palette.querySelector("#cc-color-picker");
+            this.colorPicker?.addEventListener('input', (e) => {
+                // @ts-ignore;
+                this._color = e.target.value;
+            })
+
+            this.cursorButton = this.palette.querySelector("#cursor");
+            this.cursorButton?.addEventListener("click", () => {
+                toolbar.removeEvent();
+            })
+
+            this.layoutButton = this.palette.querySelector("#layout");
+            this.layoutButton?.addEventListener("click", () => {
+                toolbar.addEvent();
+            })
         }
     }
 

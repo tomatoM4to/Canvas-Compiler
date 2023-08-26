@@ -5,7 +5,7 @@ import {Component, ComponentCommand, Toolbar} from "@/components/pallete_state";
 import {CanvasElements, PaletteElements} from "@/components/ResetInject";
 import KonvaSettings from "@/components/KonvaSetting";
 
-/* 초기화, 컨텐츠 주입 */
+/* Reset & inject content */
 export const canvas: CanvasElements = CanvasElements.getInstance();
 export const palette: PaletteElements = PaletteElements.getInstance();
 
@@ -16,17 +16,16 @@ palette.resetPaletteTemplate(paletteTemplate);
 palette.injectContent();
 
 
-/* 도구 선택 */
+/* Konva setting */
+export const konvaSettings: KonvaSettings = KonvaSettings.getInstance();
+
+
+/* toolbar */
 const component = new Component();
 const componentCommand = new ComponentCommand(component);
 
 
-const toolbar = new Toolbar(componentCommand);
-toolbar.addEvent();
-
-
-/* Konva 세팅 */
-export const konvaSettings: KonvaSettings = KonvaSettings.getInstance();
+export const toolbar = new Toolbar(componentCommand);
 
 
 chrome.runtime.onMessage.addListener(

@@ -1,3 +1,6 @@
+import {konvaSettings} from "@/scripts/content";
+import {mousedownHandler, mouseupHandler, mousemoveHandler} from "@/components/compontFunction";
+
 export interface Command {
     addEvent(): void;
     removeEvent(): void;
@@ -29,25 +32,20 @@ export class ComponentCommand implements Command {
         this.component.addEvent();
     }
     removeEvent() {
+        this.component.removeEvent();
     }
 }
 
 export class Component {
     addEvent() {
-        const pallete_state = new PalleteState();
-
-        const cursorIcon: HTMLElement | null = document.querySelector("#cursor");
-        cursorIcon?.addEventListener("click", () => {
-            pallete_state.changeFeature("cursor");
-            console.log(pallete_state);
-        })
-
-
-        const layoutIcon: HTMLElement | null = document.querySelector("#layout");
-        layoutIcon?.addEventListener("click", () => {
-            pallete_state.changeFeature("layout");
-            console.log(pallete_state);
-        })
+        konvaSettings.stage.on("mousedown", mousedownHandler);
+        konvaSettings.stage.on("mousemove", mousemoveHandler)
+        konvaSettings.stage.on("mouseup", mouseupHandler)
+    }
+    removeEvent() {
+        konvaSettings.stage.off("mousedown");
+        konvaSettings.stage.off("mousemove");
+        konvaSettings.stage.off("mouseup");
     }
 }
 
