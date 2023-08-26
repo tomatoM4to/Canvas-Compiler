@@ -1,5 +1,5 @@
 import Konva from "konva";
-import {konvaSettings, pallete_state} from "@/scripts/content";
+import {konvaSettings} from "@/scripts/content";
 
 // @ts-ignore
 let rect = null;
@@ -14,7 +14,7 @@ export function mousedownHandler() {
         y: konvaSettings.stage.getPointerPosition().y,
         width: 0,
         height: 0,
-        fill: pallete_state.getColor(),
+        fill: '#fffff',
         stroke: "blue",
         draggable: false,
     })
