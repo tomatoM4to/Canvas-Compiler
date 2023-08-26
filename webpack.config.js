@@ -5,8 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: "production",
     // mode: "development",
+    watch: true,
     entry: {
-        popup: path.resolve(__dirname, "src", "scripts", "popup.ts"),
+        // popup: path.resolve(__dirname, "src", "scripts", "popup.ts"),
         background: path.resolve(__dirname, "src", "scripts", "background.ts"),
         content: path.resolve(__dirname, "src", "scripts", "content.ts"),
     },
@@ -41,9 +42,5 @@ module.exports = {
         new CopyPlugin({
             patterns: [{from: ".", to: ".", context: "public"}]
         }),
-        new HtmlWebpackPlugin({
-            filename: 'popup.html',
-            template: path.resolve(__dirname, 'src', 'popup.html')
-        })
     ],
 };
