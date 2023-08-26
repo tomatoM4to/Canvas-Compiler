@@ -1,15 +1,19 @@
 import paletteTemplate from "@/templates/palette.html";
 import canvasTemplate from  "@/templates/canvas.html";
 import "@/styles/style.css"
-import {Component, ComponentCommand, PalleteState, Toolbar} from "@/components/pallete_state";
-import {CanvasCompilerElements} from "@/components/ResetInject";
+import {Component, ComponentCommand, Toolbar} from "@/components/pallete_state";
+import {CanvasElements, PaletteElements} from "@/components/ResetInject";
 import KonvaSettings from "@/components/KonvaSetting";
 
 /* 초기화, 컨텐츠 주입 */
-export const canvasCompiler: CanvasCompilerElements = CanvasCompilerElements.getInstance();
-canvasCompiler.resetPaletteTemplate(paletteTemplate);
-canvasCompiler.resetCanvasTemplate(canvasTemplate);
-canvasCompiler.injectContent();
+export const canvas: CanvasElements = CanvasElements.getInstance();
+export const palette: PaletteElements = PaletteElements.getInstance();
+
+canvas.resetCanvasTemplate(canvasTemplate);
+canvas.injectContent();
+
+palette.resetPaletteTemplate(paletteTemplate);
+palette.injectContent();
 
 
 /* 도구 선택 */

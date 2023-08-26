@@ -1,7 +1,7 @@
 import {Stage} from "konva/lib/Stage";
 import {Layer} from "konva/lib/Layer";
 import Konva from "konva";
-import {CanvasCompilerElements} from "@/components/ResetInject";
+import {CanvasElements} from "@/components/ResetInject";
 import {mousedownHandler, mousemoveHandler, mouseupHandler} from "@/components/drawing";
 
 
@@ -13,8 +13,8 @@ export default class KonvaSettings {
     private constructor() {
         this._stage = new Konva.Stage({
             container: 'canvas-compiler',
-            width: CanvasCompilerElements.getInstance().width,
-            height: CanvasCompilerElements.getInstance().height,
+            width: CanvasElements.getInstance().width,
+            height: CanvasElements.getInstance().height,
         });
         this._layer = new Konva.Layer();
         this.event()

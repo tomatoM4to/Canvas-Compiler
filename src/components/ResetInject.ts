@@ -1,5 +1,5 @@
-export class CanvasCompilerElements {
-    private static instance: CanvasCompilerElements;
+export class CanvasElements {
+    private static instance: CanvasElements;
 
     private _width: number;
     private _height: number;
@@ -22,11 +22,54 @@ export class CanvasCompilerElements {
         this.paletteContainer = null;
     }
 
-    public static getInstance(): CanvasCompilerElements {
-        if (!CanvasCompilerElements.instance) {
-            CanvasCompilerElements.instance = new CanvasCompilerElements();
+    public static getInstance(): CanvasElements {
+        if (!CanvasElements.instance) {
+            CanvasElements.instance = new CanvasElements();
         }
-        return CanvasCompilerElements.instance
+        return CanvasElements.instance
+    }
+
+    resetCanvasTemplate(a: string) {
+        if (this.canvas) {
+            this.canvas.innerHTML = a;
+        }
+    }
+
+
+    injectContent() {
+        if (this.main && this.canvas)
+            this.main.insertAdjacentElement("afterend", this.canvas);
+    }
+    get width(): number {
+        return this._width;
+    }
+
+    get height(): number {
+        return this._height;
+    }
+}
+
+
+export class PaletteElements {
+    private static instance: PaletteElements;
+
+    private palette: HTMLElement | null;
+    private body: HTMLElement | null;
+    private paletteMovingButton: HTMLElement | null;
+    private paletteContainer: HTMLElement | null;
+
+    private constructor() {
+        this.body = document.querySelector('body');
+        this.palette = document.createElement('div');
+        this.paletteMovingButton = null;
+        this.paletteContainer = null;
+    }
+
+    public static getInstance(): PaletteElements {
+        if (!PaletteElements.instance) {
+            PaletteElements.instance = new PaletteElements();
+        }
+        return PaletteElements.instance
     }
 
     resetPaletteTemplate(a: string) {
@@ -38,13 +81,6 @@ export class CanvasCompilerElements {
                 this.dragEventListener(this.paletteContainer, this.paletteMovingButton);
         }
     }
-
-    resetCanvasTemplate(a: string) {
-        if (this.canvas) {
-            this.canvas.innerHTML = a;
-        }
-    }
-
     private dragEventListener(element: HTMLElement, dragzone: HTMLElement): void {
         let beforeX = 0;
         let beforeY = 0;
@@ -92,16 +128,7 @@ export class CanvasCompilerElements {
     }
 
     injectContent() {
-        if (this.main && this.canvas)
-            this.main.insertAdjacentElement("afterend", this.canvas);
         if (this.body && this.palette)
             this.body.insertAdjacentElement("afterend", this.palette);
-    }
-    get width(): number {
-        return this._width;
-    }
-
-    get height(): number {
-        return this._height;
     }
 }
