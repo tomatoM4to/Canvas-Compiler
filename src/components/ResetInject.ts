@@ -57,12 +57,16 @@ export class PaletteElements {
     private body: HTMLElement | null;
     private paletteMovingButton: HTMLElement | null;
     private paletteContainer: HTMLElement | null;
+    private colorPicker: HTMLElement | null;
+    private _color: string;
 
     private constructor() {
         this.body = document.querySelector('body');
         this.palette = document.createElement('div');
         this.paletteMovingButton = null;
         this.paletteContainer = null;
+        this.colorPicker = null;
+        this._color = "#fffff";
     }
 
     public static getInstance(): PaletteElements {
@@ -79,8 +83,22 @@ export class PaletteElements {
             this.paletteContainer = this.palette.querySelector(".cc-palette-container");
             if (this.paletteContainer && this.paletteMovingButton)
                 this.dragEventListener(this.paletteContainer, this.paletteMovingButton);
+            if (this.palette) {
+                this.colorPicker = this.palette.querySelector("#cc-color-picker");
+                this.colorPicker?.addEventListener('input', (e) => {
+                    // @ts-ignore;
+                    this._color = e.target.value;
+                })
+            }
+
         }
     }
+
+    get color(): string {
+        return this._color;
+    }
+
+
     private dragEventListener(element: HTMLElement, dragzone: HTMLElement): void {
         let beforeX = 0;
         let beforeY = 0;

@@ -48,14 +48,6 @@ export class Component {
             pallete_state.changeFeature("layout");
             console.log(pallete_state);
         })
-
-
-        const colorPicker: HTMLElement | null = document?.querySelector("#cc-color-picker");
-        colorPicker?.addEventListener('input', (e) => {
-            // @ts-ignore
-            pallete_state.changeColor(e.target.value);
-            console.log(pallete_state);
-        })
     }
 }
 
