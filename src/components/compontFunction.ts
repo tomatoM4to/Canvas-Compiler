@@ -1,6 +1,6 @@
 import Konva from "konva";
 import {konvaSettings} from "@/scripts/content";
-import {PaletteElements} from "@/components/ResetInject";
+import {PaletteElements} from "@/components/Pallete";
 
 // @ts-ignore
 let rect = null;

@@ -2,7 +2,8 @@ import paletteTemplate from "@/templates/palette.html";
 import canvasTemplate from  "@/templates/canvas.html";
 import "@/styles/style.css"
 import {Component, ComponentCommand, Toolbar} from "@/components/pallete_state";
-import {CanvasElements, PaletteElements} from "@/components/ResetInject";
+import {CanvasElements} from "@/components/Canvas";
+import {PaletteElements} from "@/components/Pallete";
 import KonvaSettings from "@/components/KonvaSetting";
 
 /* Reset & inject content */
