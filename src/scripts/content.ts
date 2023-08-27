@@ -6,6 +6,7 @@ import {CanvasElements} from "@/components/Canvas";
 import {PaletteElements} from "@/components/Pallete";
 import KonvaSettings from "@/components/KonvaSetting";
 import {Component, ComponentCommand} from "@/components/command/Component";
+import ActivatedState from "@/components/ActivatedState";
 
 /* Reset & inject content */
 export const canvas: CanvasElements = CanvasElements.getInstance();
@@ -20,6 +21,7 @@ palette.injectContent();
 
 /* Konva setting */
 export const konvaSettings: KonvaSettings = KonvaSettings.getInstance();
+export const activatedState: ActivatedState = ActivatedState.getInstance();
 
 
 /* toolbar */
