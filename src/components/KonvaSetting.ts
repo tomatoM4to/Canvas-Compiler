@@ -1,8 +1,7 @@
 import {Stage} from "konva/lib/Stage";
 import {Layer} from "konva/lib/Layer";
 import Konva from "konva";
-import {CanvasElements} from "@/components/ResetInject";
-import {mousedownHandler, mousemoveHandler, mouseupHandler} from "@/components/compontFunction";
+import {CanvasElements} from "@/components/Canvas";
 
 
 export default class KonvaSettings {
