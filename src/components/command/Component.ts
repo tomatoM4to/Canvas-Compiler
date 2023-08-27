@@ -49,6 +49,7 @@ export class Component {
     }
 
     private mouseupHandler() {
+        if (!this.isDrawing) return;
         this.isDrawing = false;
     }
 

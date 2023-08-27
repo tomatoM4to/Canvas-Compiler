@@ -1,4 +1,5 @@
 import {Command} from "@/components/Toolbar";
+import {konvaSettings} from "@/scripts/content";
 
 export class CursorCommand implements Command {
     private cursor: Cursor;
@@ -17,10 +18,14 @@ export class CursorCommand implements Command {
 
 export class Cursor {
     addEvent() {
-
+        konvaSettings.layer.getChildren().forEach(shape => {
+            shape.draggable(true);
+        });
     }
 
     removeEvent() {
-
+        konvaSettings.layer.getChildren().forEach(shape => {
+            shape.draggable(false);
+        });
     }
 }

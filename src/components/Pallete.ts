@@ -1,4 +1,4 @@
-import {toolbar} from "@/scripts/content";
+import {componentCommand, cusorCommand, toolbar} from "@/scripts/content";
 
 export class PaletteElements {
     private static instance: PaletteElements;
@@ -50,13 +50,15 @@ export class PaletteElements {
             this.cursorButton = this.palette.querySelector("#cursor");
             this.cursorButton?.addEventListener("click", () => {
                 toolbar.removeEvent();
-                console.log(`cursor click`);
+                toolbar.setCommand(cusorCommand);
+                toolbar.addEvent();
             })
 
             this.layoutButton = this.palette.querySelector("#layout");
             this.layoutButton?.addEventListener("click", () => {
+                toolbar.removeEvent();
+                toolbar.setCommand(componentCommand);
                 toolbar.addEvent();
-                console.log(`layout click`)
             })
         }
     }

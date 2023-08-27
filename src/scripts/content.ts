@@ -7,6 +7,7 @@ import {PaletteElements} from "@/components/Pallete";
 import KonvaSettings from "@/components/KonvaSetting";
 import {Component, ComponentCommand} from "@/components/command/Component";
 import ActivatedState from "@/components/ActivatedState";
+import {CursorCommand, Cursor} from "@/components/command/Cursor";
 
 /* Reset & inject content */
 export const canvas: CanvasElements = CanvasElements.getInstance();
@@ -25,11 +26,10 @@ export const activatedState: ActivatedState = ActivatedState.getInstance();
 
 
 /* toolbar */
-const component = new Component();
-const componentCommand = new ComponentCommand(component);
+export const componentCommand = new ComponentCommand(new Component());
+export const cusorCommand = new CursorCommand(new Cursor());
 
-
-export const toolbar = new Toolbar(componentCommand);
+export const toolbar = new Toolbar(cusorCommand);
 
 
 chrome.runtime.onMessage.addListener(
