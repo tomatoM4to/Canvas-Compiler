@@ -50,11 +50,13 @@ export class PaletteElements {
             this.cursorButton = this.palette.querySelector("#cursor");
             this.cursorButton?.addEventListener("click", () => {
                 toolbar.removeEvent();
+                console.log(`cursor click`);
             })
 
             this.layoutButton = this.palette.querySelector("#layout");
             this.layoutButton?.addEventListener("click", () => {
                 toolbar.addEvent();
+                console.log(`layout click`)
             })
         }
     }

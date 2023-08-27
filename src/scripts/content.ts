@@ -1,10 +1,11 @@
 import paletteTemplate from "@/templates/palette.html";
 import canvasTemplate from  "@/templates/canvas.html";
 import "@/styles/style.css"
-import {Component, ComponentCommand, Toolbar} from "@/components/pallete_state";
+import {Toolbar} from "@/components/Toolbar";
 import {CanvasElements} from "@/components/Canvas";
 import {PaletteElements} from "@/components/Pallete";
 import KonvaSettings from "@/components/KonvaSetting";
+import {Component, ComponentCommand} from "@/components/command/Component";
 
 /* Reset & inject content */
 export const canvas: CanvasElements = CanvasElements.getInstance();
