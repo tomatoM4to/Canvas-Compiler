@@ -22,16 +22,18 @@ palette.injectContent();
 
 /* Konva setting */
 export const konvaSettings: KonvaSettings = KonvaSettings.getInstance();
+konvaSettings.reset();
+
 export const activatedState: ActivatedState = ActivatedState.getInstance();
 
 
 /* toolbar */
 export const componentCommand = new ComponentCommand(new Component());
 export const cusorCommand = new CursorCommand(new Cursor());
-
 export const toolbar = new Toolbar(cusorCommand);
 
 
+/* chrome api */
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.greeting === "hello") {
