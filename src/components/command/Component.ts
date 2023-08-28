@@ -42,7 +42,6 @@ export class Component {
             width: 0,
             height: 0,
             fill: PaletteElements.getInstance().color,
-            stroke: "blue",
             draggable: false,
             // Todo: modyfy name
             name: 'rect',

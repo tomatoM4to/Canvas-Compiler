@@ -74,7 +74,7 @@ export class Cursor {
                 height: Math.abs(this.y2 - this.y1),
             });
             console.log(`Cursor: mouse move event`);
-        })
+        });
 
         konvaSettings.stage.on('mouseup touchend', (e: any) => {
             if (!this.selectionRectangle.visible()) {
@@ -100,6 +100,9 @@ export class Cursor {
         konvaSettings.layer.getChildren().forEach(shape => {
             shape.draggable(false);
         });
+        konvaSettings.stage.off('mousedown touchstart');
+        konvaSettings.stage.off('mousemove touchmove');
+        konvaSettings.stage.off('mouseup touchend');
         konvaSettings.transfomer.nodes([]);
     }
 }
