@@ -33,10 +33,13 @@ export class CanvasElements {
         }
         if (this.canvasContainer) {
             this.canvas = this.canvasContainer.querySelector("#canvas-compiler");
-            this.resizeButton = this.canvasContainer.querySelector("#cc-canvas-resizer-icon");
+            this.resizeButton = this.canvasContainer.querySelector(".cc-canvas-resizer");
         }
         if (this.canvas) {
             this.canvas.style.height = `${this.canvasHeight}px`;
+        }
+        if (this.canvas && this.resizeButton) {
+            this.dragEventListener(this.canvas, this.resizeButton);
         }
     }
 
@@ -46,6 +49,35 @@ export class CanvasElements {
             this.main.insertAdjacentElement("afterend", this.canvasContainer);
     }
 
+    private dragEventListener(canvas: HTMLElement, resizerButton: HTMLElement) {
+        let dy: number = 0, oldY: number = 0;
+
+        function dragMouseUp() {
+            document.removeEventListener("mouseup", dragMouseUp);
+            document.removeEventListener("mousemove", dragMouseMove);
+            console.log(`canvas up 이벤트`)
+        }
+
+        function dragMouseMove(event: any) {
+            event.preventDefault();
+
+            dy = oldY - event.clientY;
+            oldY = event.clientY;
+            canvas.style.height = `${canvas.offsetHeight + dy}px`;
+        }
+
+        function dragMouseDown(event: any) {
+            event.preventDefault();
+
+            oldY = event.clientY;
+
+            document.addEventListener("mouseup", dragMouseUp);
+            document.addEventListener("mousemove", dragMouseMove);
+            console.log(`canvas down 이벤트`)
+        }
+
+        resizerButton.addEventListener("mousedown", dragMouseDown);
+    }
 
     get width(): number {
         return this._width;

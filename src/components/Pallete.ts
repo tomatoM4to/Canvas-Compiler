@@ -80,7 +80,8 @@ export class PaletteElements {
             document.removeEventListener("mouseup", dragMouseUp);
             document.removeEventListener("mousemove", dragMouseMove);
 
-            element.classList.remove("cc-palette-container-moving")
+            element.classList.remove("cc-palette-container-moving");
+            console.log(`pallete up 이벤트`)
         }
 
         function dragMouseMove(event: any) {
@@ -109,6 +110,7 @@ export class PaletteElements {
             element.classList.add("cc-palette-container-moving")
             document.addEventListener("mouseup", dragMouseUp);
             document.addEventListener("mousemove", dragMouseMove);
+            console.log(`pallete down 이벤트`)
         }
 
         dragzone.addEventListener("mousedown", dragMouseDown);
