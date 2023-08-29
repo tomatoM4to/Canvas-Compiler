@@ -36,6 +36,8 @@ export class Cursor {
         konvaSettings.layer.getChildren().forEach(shape => {
             shape.draggable(true);
         });
+        // Todo If there are multiple layers, it can be modified.
+        this.selectionRectangle.moveToTop();
         konvaSettings.stage.on('mousedown touchstart', (e) => this.mouseDown(e));
         konvaSettings.stage.on('mousemove touchmove', (e) => this.mouseMove(e));
         konvaSettings.stage.on('mouseup touchend', (e) => this.mouseUp(e));
