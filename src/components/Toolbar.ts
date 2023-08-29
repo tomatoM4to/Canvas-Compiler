@@ -10,6 +10,10 @@ export class Toolbar {
         this.command = command;
     }
 
+    setCommand(command: Command) {
+        this.command = command;
+    }
+
     addEvent() {
         this.command.addEvent();
     }

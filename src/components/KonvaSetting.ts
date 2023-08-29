@@ -7,8 +7,10 @@ import {CanvasElements} from "@/components/Canvas";
 export default class KonvaSettings {
     private static instance: KonvaSettings;
 
-    private _stage: Stage;
-    private _layer: Layer;
+    private _stage: Konva.Stage;
+    private _layer: Konva.Layer;
+    private _transfomer: Konva.Transformer;
+
     private constructor() {
         this._stage = new Konva.Stage({
             container: 'canvas-compiler',
@@ -16,7 +18,12 @@ export default class KonvaSettings {
             height: CanvasElements.getInstance().height,
         });
         this._layer = new Konva.Layer();
-        this._stage.add(this._layer);
+        this._transfomer = new Konva.Transformer();
+    }
+
+    reset() {
+        this.stage.add(this.layer);
+        this.layer.add(this.transfomer);
     }
 
     get layer(): Layer {
@@ -25,7 +32,9 @@ export default class KonvaSettings {
     get stage(): Stage {
         return this._stage;
     }
-
+    get transfomer(): Konva.Transformer {
+        return this._transfomer;
+    }
 
     public static getInstance() {
         if (!KonvaSettings.instance) {

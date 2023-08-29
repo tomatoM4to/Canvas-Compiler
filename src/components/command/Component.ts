@@ -42,13 +42,15 @@ export class Component {
             width: 0,
             height: 0,
             fill: PaletteElements.getInstance().color,
-            stroke: "blue",
             draggable: false,
+            // Todo: modyfy name
+            name: 'rect',
         })
         konvaSettings.layer.add(this.rect).batchDraw();
     }
 
     private mouseupHandler() {
+        if (!this.isDrawing) return;
         this.isDrawing = false;
     }
 
