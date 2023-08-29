@@ -33,9 +33,9 @@ export class PaletteElements {
         return PaletteElements.instance
     }
 
-    resetPaletteTemplate(a: string) {
+    resetPaletteTemplate(template: string) {
         if (this.palette) {
-            this.palette.innerHTML = a;
+            this.palette.innerHTML = template;
             this.paletteMovingButton = this.palette.querySelector("#cc-palette-moving-icon");
             this.paletteContainer = this.palette.querySelector(".cc-palette-container");
             if (this.paletteContainer && this.paletteMovingButton)
