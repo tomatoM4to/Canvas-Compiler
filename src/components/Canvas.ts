@@ -3,23 +3,21 @@ export class CanvasElements {
 
     private _width: number;
     private _height: number;
-    private body: HTMLElement | null;
-    private main: HTMLElement | null;
-    private palette: HTMLElement | null;
-    private canvas: HTMLElement | null;
+    private canvasHeight: number;
 
-    private paletteMovingButton: HTMLElement | null;
-    private paletteContainer: HTMLElement | null;
+    private main: HTMLElement | null;
+    private canvasContainer: HTMLElement | null;
+    private canvas: HTMLElement | null;
+    private resizeButton: HTMLElement | null;
 
     private constructor() {
         this._width = window.innerWidth;
         this._height = window.innerHeight;
-        this.body = document.querySelector('body');
+        this.canvasHeight = 0;
         this.main = document.querySelector('main');
-        this.palette = document.createElement('div');
-        this.canvas = document.createElement('div');
-        this.paletteMovingButton = null;
-        this.paletteContainer = null;
+        this.canvasContainer = document.createElement('div');
+        this.canvas = null;
+        this.resizeButton = null;
     }
 
     public static getInstance(): CanvasElements {
@@ -29,17 +27,58 @@ export class CanvasElements {
         return CanvasElements.instance
     }
 
-    resetCanvasTemplate(a: string) {
+    resetCanvasTemplate(template: string) {
+        if (this.canvasContainer) {
+            this.canvasContainer.innerHTML = template;
+        }
+        if (this.canvasContainer) {
+            this.canvas = this.canvasContainer.querySelector("#canvas-compiler");
+            this.resizeButton = this.canvasContainer.querySelector(".cc-canvas-resizer");
+        }
         if (this.canvas) {
-            this.canvas.innerHTML = a;
+            this.canvas.style.height = `${this.canvasHeight}px`;
+        }
+        if (this.canvas && this.resizeButton) {
+            this.dragEventListener(this.canvas, this.resizeButton);
         }
     }
 
 
     injectContent() {
-        if (this.main && this.canvas)
-            this.main.insertAdjacentElement("afterend", this.canvas);
+        if (this.main && this.canvasContainer)
+            this.main.insertAdjacentElement("afterend", this.canvasContainer);
     }
+
+    private dragEventListener(canvas: HTMLElement, resizerButton: HTMLElement) {
+        let dy: number = 0, oldY: number = 0;
+
+        function dragMouseUp() {
+            document.removeEventListener("mouseup", dragMouseUp);
+            document.removeEventListener("mousemove", dragMouseMove);
+            console.log(`canvas up 이벤트`)
+        }
+
+        function dragMouseMove(event: any) {
+            event.preventDefault();
+
+            dy = oldY - event.clientY;
+            oldY = event.clientY;
+            canvas.style.height = `${canvas.offsetHeight + dy}px`;
+        }
+
+        function dragMouseDown(event: any) {
+            event.preventDefault();
+
+            oldY = event.clientY;
+
+            document.addEventListener("mouseup", dragMouseUp);
+            document.addEventListener("mousemove", dragMouseMove);
+            console.log(`canvas down 이벤트`)
+        }
+
+        resizerButton.addEventListener("mousedown", dragMouseDown);
+    }
+
     get width(): number {
         return this._width;
     }
