@@ -41,6 +41,7 @@ export class Cursor {
         konvaSettings.stage.on('mousedown touchstart', (e) => this.mouseDown(e));
         konvaSettings.stage.on('mousemove touchmove', (e) => this.mouseMove(e));
         konvaSettings.stage.on('mouseup touchend', (e) => this.mouseUp(e));
+        konvaSettings.stage.on('click tap', (e) => this.mouseClick(e));
     }
 
     removeEvent() {
@@ -50,6 +51,7 @@ export class Cursor {
         konvaSettings.stage.off('mousedown touchstart');
         konvaSettings.stage.off('mousemove touchmove');
         konvaSettings.stage.off('mouseup touchend');
+        konvaSettings.stage.off('click tap');
         konvaSettings.transfomer.nodes([]);
     }
 
@@ -104,5 +106,44 @@ export class Cursor {
             Konva.Util.haveIntersection(box, shape.getClientRect())
         );
         konvaSettings.transfomer.nodes(selected);
+    }
+
+    private mouseClick(e: any) {
+        // if we are selecting with rect, do nothing
+        if (this.selectionRectangle.visible()) {
+            return;
+        }
+
+        // if click on empty area - remove all selections
+        if (e.target === konvaSettings.stage) {
+            konvaSettings.transfomer.nodes([]);
+            return;
+        }
+
+        // do nothing if clicked NOT on our rectangles
+        if (!e.target.hasName('rect')) {
+            return;
+        }
+
+        // do we pressed shift or ctrl?
+        const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
+        const isSelected = konvaSettings.transfomer.nodes().indexOf(e.target) >= 0;
+
+        if (!metaPressed && !isSelected) {
+            // if no key pressed and the node is not selected
+            // select just one
+            konvaSettings.transfomer.nodes([e.target]);
+        } else if (metaPressed && isSelected) {
+            // if we pressed keys and node was selected
+            // we need to remove it from selection:
+            const nodes = konvaSettings.transfomer.nodes().slice(); // use slice to have new copy of array
+            // remove node from array
+            nodes.splice(nodes.indexOf(e.target), 1);
+            konvaSettings.transfomer.nodes(nodes);
+        } else if (metaPressed && !isSelected) {
+            // add the node into selection
+            const nodes = konvaSettings.transfomer.nodes().concat([e.target]);
+            konvaSettings.transfomer.nodes(nodes);
+        }
     }
 }
