@@ -25,6 +25,7 @@ export class Snap {
             // clear all previous lines on the screen
             konvaSettings.layer.find('.guid-line').forEach((l) => l.destroy());
 
+            console.log(e.target);
             let lineGuideStops = this.getLineGuideStops(e.target);
 
             let itemBounds = this.getObjectSnappingEdges(e.target);
@@ -37,6 +38,7 @@ export class Snap {
                 return;
             }
 
+            // console.log(lineGuideStops);
             // @ts-ignore
             this.drawGuides(guides);
 
@@ -86,6 +88,9 @@ export class Snap {
                 }
             });
             e.target.absolutePosition(absPos);
+        });
+        konvaSettings.layer.on('dragend', function (e) {
+            konvaSettings.layer.find('.guid-line').forEach((l) => l.destroy());
         });
     }
     removeEvent() {
