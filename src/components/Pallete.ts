@@ -1,4 +1,4 @@
-import {componentCommand, cusorCommand, toolbar} from "@/scripts/content";
+import {componentCommand, cusorCommand, snapCommand, toolbar} from "@/scripts/content";
 
 export class PaletteElements {
     private static instance: PaletteElements;
@@ -10,7 +10,7 @@ export class PaletteElements {
     private colorPicker: HTMLElement | null;
     private cursorButton: HTMLElement | null;
     private layoutButton: HTMLElement | null;
-
+    private imageButton: HTMLElement | null;
 
 
     private _color: string;
@@ -24,6 +24,7 @@ export class PaletteElements {
         this._color = "#fffff";
         this.cursorButton = null;
         this.layoutButton = null;
+        this.imageButton = null;
     }
 
     public static getInstance(): PaletteElements {
@@ -58,6 +59,13 @@ export class PaletteElements {
             this.layoutButton?.addEventListener("click", () => {
                 toolbar.removeEvent();
                 toolbar.setCommand(componentCommand);
+                toolbar.addEvent();
+            })
+
+            this.imageButton = this.palette.querySelector("#image");
+            this.imageButton?.addEventListener("click", () => {
+                toolbar.removeEvent();
+                toolbar.setCommand(snapCommand);
                 toolbar.addEvent();
             })
         }
