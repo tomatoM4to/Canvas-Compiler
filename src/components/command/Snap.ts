@@ -30,7 +30,6 @@ export class Snap {
 
             let itemBounds = this.getObjectSnappingEdges(e.target);
 
-            // @ts-ignore
             let guides = this.getGuides(lineGuideStops, itemBounds);
 
             // do nothing of no snapping
@@ -38,12 +37,10 @@ export class Snap {
                 return;
             }
 
-            // console.log(lineGuideStops);
-            // @ts-ignore
             this.drawGuides(guides);
 
             let absPos = e.target.absolutePosition();
-            // now force object position
+
             guides.forEach((lg: any) => {
                 switch (lg.snap) {
                     case 'start': {
