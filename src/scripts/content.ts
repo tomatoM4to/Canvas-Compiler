@@ -8,6 +8,7 @@ import KonvaSettings from "@/components/KonvaSetting";
 import {Component, ComponentCommand} from "@/components/command/Component";
 import ActivatedState from "@/components/ActivatedState";
 import {CursorCommand, Cursor} from "@/components/command/Cursor";
+import {SnapCommand, Snap} from "@/components/command/Snap";
 
 /* Reset & inject content */
 export const canvas: CanvasElements = CanvasElements.getInstance();
@@ -30,6 +31,9 @@ export const activatedState: ActivatedState = ActivatedState.getInstance();
 /* toolbar */
 export const componentCommand = new ComponentCommand(new Component());
 export const cusorCommand = new CursorCommand(new Cursor());
+export const snapCommand = new SnapCommand(new Snap());
+
+
 export const toolbar = new Toolbar(cusorCommand);
 
 
