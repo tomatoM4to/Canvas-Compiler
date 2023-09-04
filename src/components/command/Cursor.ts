@@ -56,7 +56,11 @@ export class Cursor {
     }
 
     private mouseDown(e: any) {
+        if (konvaSettings.transfomer.nodes().length >= 1) {
+            return;
+        }
         if (e.target !== konvaSettings.stage) {
+            konvaSettings.transfomer.nodes([e.target]);
             return;
         }
         e.evt.preventDefault();
@@ -109,11 +113,6 @@ export class Cursor {
     }
 
     private mouseClick(e: any) {
-        // if we are selecting with rect, do nothing
-        if (this.selectionRectangle.visible()) {
-            return;
-        }
-
         // if click on empty area - remove all selections
         if (e.target === konvaSettings.stage) {
             konvaSettings.transfomer.nodes([]);

@@ -25,10 +25,11 @@ export class Snap {
             // clear all previous lines on the screen
             konvaSettings.layer.find('.guid-line').forEach((l) => l.destroy());
 
-            console.log(e.target);
-            let lineGuideStops = this.getLineGuideStops(e.target);
+            if (konvaSettings.transfomer.nodes().length > 1) return;
 
-            let itemBounds = this.getObjectSnappingEdges(e.target);
+            let lineGuideStops = this.getLineGuideStops(konvaSettings.transfomer.nodes()[0]);
+
+            let itemBounds = this.getObjectSnappingEdges(konvaSettings.transfomer.nodes()[0]);
 
             let guides = this.getGuides(lineGuideStops, itemBounds);
 
@@ -93,7 +94,7 @@ export class Snap {
     removeEvent() {
 
     }
-    private getLineGuideStops(skipShape: Konva.Rect) {
+    private getLineGuideStops(skipShape: Konva.Node) {
         let vertical: number[] = [0, konvaSettings.stage.width() / 2, konvaSettings.stage.width()];
         let horizontal: number[] = [0, konvaSettings.stage.height() / 2, konvaSettings.stage.height()];
 
@@ -101,6 +102,7 @@ export class Snap {
             if (guideItem === skipShape) {
                 return;
             }
+
             let box = guideItem.getClientRect();
 
             // @ts-ignore
@@ -114,7 +116,7 @@ export class Snap {
         };
     }
 
-    private getObjectSnappingEdges(node: Konva.Rect) {
+    private getObjectSnappingEdges(node: Konva.Node) {
         let box = node.getClientRect();
         let absPos = node.absolutePosition();
 
@@ -177,7 +179,7 @@ export class Snap {
 
         lineGuideStops.horizontal.forEach((lineGuide: any) => {
             itemBounds.horizontal.forEach((itemBound: any) => {
-                var diff = Math.abs(lineGuide - itemBound.guide);
+                let diff = Math.abs(lineGuide - itemBound.guide);
                 if (diff < this.GUIDELINE_OFFSET) {
                     resultH.push({
                         lineGuide: lineGuide,
@@ -192,8 +194,8 @@ export class Snap {
         var guides = [];
 
         // find closest snap
-        var minV = resultV.sort((a, b) => a.diff - b.diff)[0];
-        var minH = resultH.sort((a, b) => a.diff - b.diff)[0];
+        let minV = resultV.sort((a, b) => a.diff - b.diff)[0];
+        let minH = resultH.sort((a, b) => a.diff - b.diff)[0];
         if (minV) {
             guides.push({
                 lineGuide: minV.lineGuide,
