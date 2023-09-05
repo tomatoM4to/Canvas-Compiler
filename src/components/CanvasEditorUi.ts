@@ -1,5 +1,6 @@
 import Konva from "konva";
 import {CanvasElements} from "@/components/Canvas";
+import {konvaSettings} from "@/scripts/content";
 
 export default class CanvasEditorUi {
     private _shape: Konva.Shape | null = null;
@@ -12,6 +13,10 @@ export default class CanvasEditorUi {
     private _backgroundColor: HTMLElement | null = null;
     private _stroke: HTMLElement | null = null;
     private _strokeColor: HTMLElement | null = null;
+
+    private _upButton: HTMLElement | null = null;
+    private _downButton: HTMLElement | null = null;
+
     private _effect : HTMLElement | null = null;
     private _effectIntensity : HTMLElement | null = null;
 
@@ -25,8 +30,68 @@ export default class CanvasEditorUi {
         this._backgroundColor = canvas.canvas.querySelector("#canvas-compiler-background");
         this._stroke = canvas.canvas.querySelector("#canvas-compiler-stroke");
         this._strokeColor = canvas.canvas.querySelector("#canvas-compiler-stroke-color");
+
+        this._upButton = canvas.canvas.querySelector("#canvas-compiler-up-button");
+        this._downButton = canvas.canvas.querySelector("#canvas-compiler-down-button");
+
         this._effect = canvas.canvas.querySelector("#canvas-compiler-effect");
         this._effectIntensity = canvas.canvas.querySelector("#canvas-compiler-effect-intensity");
+    }
+
+    addEventListener() {
+        this.prompt?.addEventListener('input', (e: any) => {
+            if (!this.shape) return;
+            this.shape.id(`${e.target.value}`);
+            konvaSettings.layer.draw();
+        })
+        this.radiusTopLeft?.addEventListener('input', (e: any) => {
+            if (!this.shape) return;
+            // @ts-ignore
+            this.shape.cornerRadius()[0] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+        this.radiusTopRight?.addEventListener('input', (e: any) => {
+            if (!this.shape) return;
+            // @ts-ignore
+            this.shape.cornerRadius()[1] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+        this.radiusBottomRight?.addEventListener('input', (e: any) => {
+            if (!this.shape) return;
+            // @ts-ignore
+            this.shape.cornerRadius()[2] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+        this.radiusBottomLeft?.addEventListener('input', (e: any) => {
+            if (!this.shape) return;
+            // @ts-ignore
+            this.shape.cornerRadius()[3] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+        this.backgroundColor?.addEventListener('input', (e: any) => {
+            if (!this.shape) return;
+            // @ts-ignore
+            this.shape.fill(`${e.target.value}`);
+            konvaSettings.layer.draw();
+        })
+        this.strokeColor?.addEventListener('input', (e: any) => {
+            if (!this.shape) return;
+            // @ts-ignore
+            this.shape.stroke(`${e.target.value}`);
+            konvaSettings.layer.draw();
+        })
+        this.stroke?.addEventListener('input', (e: any) => {
+            if (!this.shape) return;
+            // @ts-ignore
+            this.shape.strokeWidth(Number(e.target.value));
+            // konvaSettings.layer.draw();
+        })
+        this.upButton?.addEventListener('click', () => {
+            this.shape?.moveUp();
+        })
+        this.downButton?.addEventListener('click', () => {
+            this.shape?.moveDown();
+        })
     }
 
     get shape(): Konva.Shape | null {
@@ -55,6 +120,14 @@ export default class CanvasEditorUi {
 
     get radiusBottomLeft(): HTMLElement | null {
         return this._radiusBottomLeft;
+    }
+
+    get upButton(): HTMLElement | null {
+        return this._upButton;
+    }
+
+    get downButton(): HTMLElement | null {
+        return this._downButton;
     }
 
     get backgroundColor(): HTMLElement | null {

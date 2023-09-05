@@ -19,6 +19,7 @@ canvas.resetCanvasTemplate(canvasTemplate);
 canvas.injectContent();
 
 export const canvasEditorUi = new CanvasEditorUi(canvas);
+canvasEditorUi.addEventListener();
 
 palette.resetPaletteTemplate(paletteTemplate);
 palette.injectContent();

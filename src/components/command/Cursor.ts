@@ -61,6 +61,7 @@ export class Cursor {
         }
         if (e.target !== konvaSettings.stage) {
             konvaSettings.transfomer.nodes([e.target]);
+            canvasEditorUi.shape = e.target;
             // @ts-ignore
             canvasEditorUi.prompt.value = e.target.id();
             // @ts-ignore
