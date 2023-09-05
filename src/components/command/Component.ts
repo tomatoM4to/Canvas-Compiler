@@ -45,6 +45,10 @@ export class Component {
             draggable: false,
             // Todo: modyfy name
             name: 'rect',
+            cornerRadius: [0, 10, 30, 90],
+            stroke: 'black',
+            strokeWidth: 4,
+            id: "primpt",
         })
         konvaSettings.layer.add(this.rect).batchDraw();
     }

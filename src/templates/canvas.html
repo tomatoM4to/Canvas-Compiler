@@ -11,26 +11,26 @@
             <h2>Prompt</h2>
             <div class="cc-canvas-modify-ui">
                 <label>
-                    <textarea name="Prompt" cols="30" rows="5"></textarea>
+                    <textarea id="canvas-compiler-prompt" name="Prompt" cols="30" rows="5"></textarea>
                 </label>
             </div>
             <h2>Radius</h2>
             <div class="cc-canvas-modify-ui">
                 <label>
                     Top left
-                    <input type="number">
+                    <input id="radius-topleft" type="number">
                 </label>
                 <label>
                     Top right
-                    <input type="number">
-                </label>
-                <label>
-                    Bottom left
-                    <input type="number">
+                    <input id="radius-topright" type="number">
                 </label>
                 <label>
                     Bottom right
-                    <input type="number">
+                    <input id="radius-bottomright" type="number">
+                </label>
+                <label>
+                    Bottom left
+                    <input id="radius-bottomleft" type="number">
                 </label>
             </div>
             <h2>Z-index</h2>
@@ -41,23 +41,23 @@
             <h2>Background</h2>
             <div class="cc-canvas-modify-ui">
                 <label>
-                    <input type="color">
+                    <input id="canvas-compiler-background" type="color">
                 </label>
             </div>
             <h2>Stroke</h2>
             <div class="cc-canvas-modify-ui">
                 <label>
-                    <input type="color">
+                    <input id="canvas-compiler-stroke-color" type="color">
                 </label>
                 <label>
                     Thickness
-                    <input type="number">
+                    <input id="canvas-compiler-stroke" type="number">
                 </label>
             </div>
             <h2>Effect</h2>
             <div class="cc-canvas-modify-ui">
                 <label>
-                    <select>
+                    <select id="canvas-compiler-effect">
                         <option value="option1">None</option>
                         <option value="option2">Shadow</option>
                         <option value="option3">Blur</option>
@@ -66,7 +66,7 @@
                 <div class="cc-canvas-modify-ui">
                     Intensity
                     <label>
-                        <input type="number">
+                        <input id="canvas-compiler-effect-intensity" type="number">
                     </label>
                 </div>
             </div>
