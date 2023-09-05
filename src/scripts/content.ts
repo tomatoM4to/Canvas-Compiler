@@ -9,6 +9,7 @@ import {Component, ComponentCommand} from "@/components/command/Component";
 import ActivatedState from "@/components/ActivatedState";
 import {CursorCommand, Cursor} from "@/components/command/Cursor";
 import {SnapCommand, Snap} from "@/components/command/Snap";
+import CanvasEditorUi from "@/components/CanvasEditorUi";
 
 /* Reset & inject content */
 export const canvas: CanvasElements = CanvasElements.getInstance();
@@ -16,6 +17,8 @@ export const palette: PaletteElements = PaletteElements.getInstance();
 
 canvas.resetCanvasTemplate(canvasTemplate);
 canvas.injectContent();
+
+export const canvasEditorUi = new CanvasEditorUi(canvas);
 
 palette.resetPaletteTemplate(paletteTemplate);
 palette.injectContent();

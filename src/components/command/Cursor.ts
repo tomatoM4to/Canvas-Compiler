@@ -1,5 +1,5 @@
 import {Command} from "@/components/Toolbar";
-import {canvas, konvaSettings} from "@/scripts/content";
+import {canvas, canvasEditorUi, konvaSettings} from "@/scripts/content";
 import Konva from "konva";
 
 export class CursorCommand implements Command {
@@ -62,21 +62,21 @@ export class Cursor {
         if (e.target !== konvaSettings.stage) {
             konvaSettings.transfomer.nodes([e.target]);
             // @ts-ignore
-            canvas.prompt.value = e.target.id();
+            canvasEditorUi.prompt.value = e.target.id();
             // @ts-ignore
-            canvas.radiusTopLeft.value = e.target.cornerRadius()[0];
+            canvasEditorUi.radiusTopLeft.value = e.target.cornerRadius()[0];
             // @ts-ignore
-            canvas.radiusTopRight.value = e.target.cornerRadius()[1];
+            canvasEditorUi.radiusTopRight.value = e.target.cornerRadius()[1];
             // @ts-ignore
-            canvas.radiusBottomRight.value = e.target.cornerRadius()[2];
+            canvasEditorUi.radiusBottomRight.value = e.target.cornerRadius()[2];
             // @ts-ignore
-            canvas.radiusBottomLeft.value = e.target.cornerRadius()[3];
+            canvasEditorUi.radiusBottomLeft.value = e.target.cornerRadius()[3];
             // @ts-ignore
-            canvas.backgroundColor.value = e.target.fill();
+            canvasEditorUi.backgroundColor.value = e.target.fill();
             // @ts-ignore
-            canvas.strokeColor.value = e.target.stroke();
+            canvasEditorUi.strokeColor.value = e.target.stroke();
             // @ts-ignore
-            canvas.stroke.value = e.target.strokeWidth();
+            canvasEditorUi.stroke.value = e.target.strokeWidth();
             return;
         }
 
