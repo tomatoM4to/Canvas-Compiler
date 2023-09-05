@@ -10,6 +10,8 @@ export class CanvasElements {
     private canvas: HTMLElement | null;
     private resizeButton: HTMLElement | null;
 
+    private modifyUi: HTMLElement | null;
+
     private constructor() {
         this._width = window.innerWidth;
         this._height = window.innerHeight;
@@ -18,6 +20,7 @@ export class CanvasElements {
         this.canvasContainer = document.createElement('div');
         this.canvas = null;
         this.resizeButton = null;
+        this.modifyUi = null;
     }
 
     public static getInstance(): CanvasElements {
@@ -32,11 +35,13 @@ export class CanvasElements {
             this.canvasContainer.innerHTML = template;
         }
         if (this.canvasContainer) {
-            this.canvas = this.canvasContainer.querySelector("#canvas-compiler");
+            this.canvas = this.canvasContainer.querySelector(".cc-canvas-compiler-ui");
             this.resizeButton = this.canvasContainer.querySelector(".cc-canvas-resizer");
+            this.modifyUi = this.canvasContainer.querySelector('.cc-canvas-client-container');
         }
         if (this.canvas) {
             this.canvas.style.height = `${this.canvasHeight}px`;
+            // this.modifyUi.style.height = `${this.canvasHeight}px`;
         }
         if (this.canvas && this.resizeButton) {
             this.dragEventListener(this.canvas, this.resizeButton);
@@ -64,6 +69,7 @@ export class CanvasElements {
             dy = oldY - event.clientY;
             oldY = event.clientY;
             canvas.style.height = `${canvas.offsetHeight + dy}px`;
+            // modyfyUi.style.height = `${canvas.offsetHeight + dy}px`;
         }
 
         function dragMouseDown(event: any) {
