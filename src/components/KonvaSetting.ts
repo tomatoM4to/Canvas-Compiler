@@ -21,7 +21,6 @@ export default class KonvaSettings {
         this._transfomer = new Konva.Transformer({
             rotationSnaps: [0, 90, 180, 270],
         });
-        this._stage.container().style.backgroundColor = 'green';
     }
 
     reset() {

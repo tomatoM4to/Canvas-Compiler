@@ -190,3 +190,7 @@
     border-color: #555;
     outline: none; /* 기본 윤곽선 제거 */
 }
+
+.cc-canvas-compiler-display-none {
+    display: none;
+}

@@ -20,6 +20,8 @@ export default class CanvasEditorUi {
     private _effect : HTMLElement | null = null;
     private _effectIntensity : HTMLElement | null = null;
 
+    private _backgroundColorStage: HTMLElement | null = null;
+
     constructor(canvas: CanvasElements) {
         if (!canvas.canvas) return;
         this._prompt = canvas.canvas.querySelector("#canvas-compiler-prompt");
@@ -27,7 +29,7 @@ export default class CanvasEditorUi {
         this._radiusTopRight = canvas.canvas.querySelector("#radius-topright");
         this._radiusBottomRight = canvas.canvas.querySelector("#radius-bottomright");
         this._radiusBottomLeft = canvas.canvas.querySelector("#radius-bottomleft");
-        this._backgroundColor = canvas.canvas.querySelector("#canvas-compiler-background");
+        this._backgroundColor = canvas.canvas.querySelector("#canvas-compiler-background-shape");
         this._stroke = canvas.canvas.querySelector("#canvas-compiler-stroke");
         this._strokeColor = canvas.canvas.querySelector("#canvas-compiler-stroke-color");
 
@@ -36,6 +38,8 @@ export default class CanvasEditorUi {
 
         this._effect = canvas.canvas.querySelector("#canvas-compiler-effect");
         this._effectIntensity = canvas.canvas.querySelector("#canvas-compiler-effect-intensity");
+
+        this._backgroundColorStage = canvas.canvas.querySelector("#canvas-compiler-background-stage");
     }
 
     addEventListener() {
@@ -91,6 +95,9 @@ export default class CanvasEditorUi {
         })
         this.downButton?.addEventListener('click', () => {
             this.shape?.moveDown();
+        })
+        this.backgroundColorStage?.addEventListener('input', (e: any) => {
+            konvaSettings.stage.container().style.backgroundColor = e.target.value;
         })
     }
 
@@ -149,4 +156,10 @@ export default class CanvasEditorUi {
     get effectIntensity(): HTMLElement | null {
         return this._effectIntensity;
     }
+
+    get backgroundColorStage(): HTMLElement | null {
+        return this._backgroundColorStage;
+    }
+
+
 }
