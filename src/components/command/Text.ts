@@ -1,5 +1,5 @@
 import {Command} from "@/components/Toolbar";
-import {konvaSettings, palette} from "@/scripts/content";
+import {canvasEditorUi, konvaSettings} from "@/scripts/content";
 import Konva from "konva";
 import {PaletteElements} from "@/components/Pallete";
 
@@ -38,6 +38,7 @@ export class Text {
             fontSize: 30,
             fill: PaletteElements.getInstance().color,
             name: 'rect',
+            fontStyle: 'normal',
         });
         text.on('transform', () => {
             text.setAttrs({
@@ -47,6 +48,8 @@ export class Text {
             });
         });
         konvaSettings.layer.add(text);
+        canvasEditorUi.updateEditor(text);
         konvaSettings.transfomer.nodes([text]);
+        canvasEditorUi.text = text;
     }
 }
