@@ -61,23 +61,11 @@ export class Cursor {
         }
         if (e.target !== konvaSettings.stage) {
             konvaSettings.transfomer.nodes([e.target]);
-            canvasEditorUi.shape = e.target;
-            // @ts-ignore
-            canvasEditorUi.prompt.value = e.target.id();
-            // @ts-ignore
-            canvasEditorUi.radiusTopLeft.value = e.target.cornerRadius()[0];
-            // @ts-ignore
-            canvasEditorUi.radiusTopRight.value = e.target.cornerRadius()[1];
-            // @ts-ignore
-            canvasEditorUi.radiusBottomRight.value = e.target.cornerRadius()[2];
-            // @ts-ignore
-            canvasEditorUi.radiusBottomLeft.value = e.target.cornerRadius()[3];
-            // @ts-ignore
-            canvasEditorUi.backgroundColor.value = e.target.fill();
-            // @ts-ignore
-            canvasEditorUi.strokeColor.value = e.target.stroke();
-            // @ts-ignore
-            canvasEditorUi.stroke.value = e.target.strokeWidth();
+
+            canvasEditorUi.stageEditor?.classList.add("cc-canvas-compiler-display-none");
+            canvasEditorUi.shapeEditor?.classList.remove("cc-canvas-compiler-display-none");
+
+            canvasEditorUi.shapeInfoSetting(e.target);
             return;
         }
 
@@ -128,12 +116,16 @@ export class Cursor {
             Konva.Util.haveIntersection(box, shape.getClientRect())
         );
         konvaSettings.transfomer.nodes(selected);
+        canvasEditorUi.stageEditor?.classList.remove("cc-canvas-compiler-display-none");
+        canvasEditorUi.shapeEditor?.classList.add("cc-canvas-compiler-display-none");
     }
 
     private mouseClick(e: any) {
         // if click on empty area - remove all selections
         if (e.target === konvaSettings.stage) {
             konvaSettings.transfomer.nodes([]);
+            canvasEditorUi.stageEditor?.classList.remove("cc-canvas-compiler-display-none");
+            canvasEditorUi.shapeEditor?.classList.add("cc-canvas-compiler-display-none");
             return;
         }
 

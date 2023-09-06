@@ -1,9 +1,18 @@
 import Konva from "konva";
 import {CanvasElements} from "@/components/Canvas";
-import {konvaSettings} from "@/scripts/content";
+import {canvasEditorUi, konvaSettings} from "@/scripts/content";
 
 export default class CanvasEditorUi {
+    get stageEditor(): HTMLElement | null {
+        return this._stageEditor;
+    }
+    get shapeEditor(): HTMLElement | null {
+        return this._shapeEditor;
+    }
     private _shape: Konva.Shape | null = null;
+
+    private _shapeEditor: HTMLElement | null = null;
+    private _stageEditor: HTMLElement | null = null;
 
     private _prompt: HTMLElement | null = null;
     private _radiusTopLeft: HTMLElement | null = null;
@@ -24,6 +33,10 @@ export default class CanvasEditorUi {
 
     constructor(canvas: CanvasElements) {
         if (!canvas.canvas) return;
+
+        this._shapeEditor = canvas.canvas.querySelector("#cc-canvas-shape-editor");
+        this._stageEditor = canvas.canvas.querySelector("#cc-canvas-stage-editor");
+
         this._prompt = canvas.canvas.querySelector("#canvas-compiler-prompt");
         this._radiusTopLeft = canvas.canvas.querySelector("#radius-topleft");
         this._radiusTopRight = canvas.canvas.querySelector("#radius-topright");
@@ -99,6 +112,27 @@ export default class CanvasEditorUi {
         this.backgroundColorStage?.addEventListener('input', (e: any) => {
             konvaSettings.stage.container().style.backgroundColor = e.target.value;
         })
+    }
+
+    shapeInfoSetting(target: any) {
+        canvasEditorUi.shape = target;
+
+        // @ts-ignore
+        canvasEditorUi.prompt.value = target.id();
+        // @ts-ignore
+        canvasEditorUi.radiusTopLeft.value = target.cornerRadius()[0];
+        // @ts-ignore
+        canvasEditorUi.radiusTopRight.value = target.cornerRadius()[1];
+        // @ts-ignore
+        canvasEditorUi.radiusBottomRight.value = target.cornerRadius()[2];
+        // @ts-ignore
+        canvasEditorUi.radiusBottomLeft.value = target.cornerRadius()[3];
+        // @ts-ignore
+        canvasEditorUi.backgroundColor.value = target.fill();
+        // @ts-ignore
+        canvasEditorUi.strokeColor.value = target.stroke();
+        // @ts-ignore
+        canvasEditorUi.stroke.value = target.strokeWidth();
     }
 
     get shape(): Konva.Shape | null {
