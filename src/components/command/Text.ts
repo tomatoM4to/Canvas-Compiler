@@ -1,6 +1,7 @@
 import {Command} from "@/components/Toolbar";
-import {konvaSettings} from "@/scripts/content";
+import {konvaSettings, palette} from "@/scripts/content";
 import Konva from "konva";
+import {PaletteElements} from "@/components/Pallete";
 
 export class TextCommand implements Command {
     private text: Text;
@@ -33,8 +34,10 @@ export class Text {
         let text: Konva.Text = new Konva.Text({
             x: pos.x,
             y: pos.y,
-            text: "simple test",
+            text: "sample text",
             fontSize: 30,
+            fill: PaletteElements.getInstance().color,
+            name: 'rect',
         });
         text.on('transform', () => {
             text.setAttrs({
@@ -44,5 +47,6 @@ export class Text {
             });
         });
         konvaSettings.layer.add(text);
+        konvaSettings.transfomer.nodes([text]);
     }
 }
