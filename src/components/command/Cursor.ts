@@ -1,5 +1,5 @@
 import {Command} from "@/components/Toolbar";
-import {konvaSettings} from "@/scripts/content";
+import {canvas, canvasEditorUi, konvaSettings} from "@/scripts/content";
 import Konva from "konva";
 
 export class CursorCommand implements Command {
@@ -61,8 +61,14 @@ export class Cursor {
         }
         if (e.target !== konvaSettings.stage) {
             konvaSettings.transfomer.nodes([e.target]);
+
+            canvasEditorUi.stageEditor?.classList.add("cc-canvas-compiler-display-none");
+            canvasEditorUi.shapeEditor?.classList.remove("cc-canvas-compiler-display-none");
+
+            canvasEditorUi.shapeInfoSetting(e.target);
             return;
         }
+
         e.evt.preventDefault();
         this.x1 = konvaSettings.stage.getPointerPosition()?.x;
         this.y1 = konvaSettings.stage.getPointerPosition()?.y;
@@ -110,12 +116,16 @@ export class Cursor {
             Konva.Util.haveIntersection(box, shape.getClientRect())
         );
         konvaSettings.transfomer.nodes(selected);
+        canvasEditorUi.stageEditor?.classList.remove("cc-canvas-compiler-display-none");
+        canvasEditorUi.shapeEditor?.classList.add("cc-canvas-compiler-display-none");
     }
 
     private mouseClick(e: any) {
         // if click on empty area - remove all selections
         if (e.target === konvaSettings.stage) {
             konvaSettings.transfomer.nodes([]);
+            canvasEditorUi.stageEditor?.classList.remove("cc-canvas-compiler-display-none");
+            canvasEditorUi.shapeEditor?.classList.add("cc-canvas-compiler-display-none");
             return;
         }
 
