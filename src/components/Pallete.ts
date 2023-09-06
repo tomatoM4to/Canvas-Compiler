@@ -63,13 +63,6 @@ export class PaletteElements {
                 toolbar.addEvent();
             })
 
-            this.imageButton = this.palette.querySelector("#image");
-            this.imageButton?.addEventListener("click", () => {
-                toolbar.removeEvent();
-                toolbar.setCommand(snapCommand);
-                toolbar.addEvent();
-            })
-
             this.textButton = this.palette.querySelector("#text");
             this.textButton?.addEventListener("click", () => {
                 toolbar.removeEvent();

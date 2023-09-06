@@ -34,12 +34,17 @@ export const activatedState: ActivatedState = ActivatedState.getInstance();
 
 
 /* toolbar */
+export const toolbar = new Toolbar(new SnapCommand(new Snap()));
+toolbar.addEvent();
+
 export const componentCommand = new ComponentCommand(new Component());
 export const cusorCommand = new CursorCommand(new Cursor());
 export const snapCommand = new SnapCommand(new Snap());
 export const textCommand = new TextCommand(new Text());
 
-export const toolbar = new Toolbar(cusorCommand);
+
+toolbar.setCommand(cusorCommand);
+toolbar.addEvent();
 
 
 /* chrome api */
