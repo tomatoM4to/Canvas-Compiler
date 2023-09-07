@@ -54,9 +54,12 @@ export default class CanvasEditorUi {
     private _effectIntensity : HTMLElement | null = null;
 
     // stage
+    private generateButton: HTMLElement | null = null;
+    private mainPrompt: HTMLElement | null = null;
     private _backgroundColorStage: HTMLElement | null = null;
 
     // text
+    private textPrompt: HTMLElement | null = null;
     private _textColor: HTMLElement | null = null;
     private _textSize: HTMLElement | null = null;
     private _textWeight: HTMLElement | null = null;
@@ -64,6 +67,7 @@ export default class CanvasEditorUi {
     private _textDown: HTMLElement | null = null;
 
     // image
+    private imagePrompt: HTMLElement | null = null;
     private _imageUrl: HTMLElement | null = null;
     private imageRadiusTopLeft: HTMLElement | null = null;
     private imageRadiusTopRight: HTMLElement | null = null;
@@ -96,9 +100,12 @@ export default class CanvasEditorUi {
         this._downButton = canvas.canvas.querySelector("#canvas-compiler-down-button");
 
         // stage editor ui
+        this.generateButton = canvas.canvas.querySelector("#canvas-compiler-generate");
+        this.mainPrompt = canvas.canvas.querySelector("#cc-canvas-stage-editor");
         this._backgroundColorStage = canvas.canvas.querySelector("#canvas-compiler-background-stage");
 
         // text ui
+        this.textPrompt = canvas.canvas.querySelector("#canvas-compiler-text-prompt");
         this._textColor = canvas.canvas.querySelector("#canvas-compiler-text-color");
         this._textSize = canvas.canvas.querySelector("#canvas-compiler-text-size");
         this._textWeight = canvas.canvas.querySelector("#canvas-compiler-text-weight");
@@ -106,6 +113,7 @@ export default class CanvasEditorUi {
         this._textDown = canvas.canvas.querySelector("#canvas-compiler-text-down-button");
 
         // image ui
+        this.imagePrompt = canvas.canvas.querySelector("#canvas-compiler-image-prompt");
         this._imageUrl = canvas.canvas.querySelector("#canvas-compiler-image-url");
         this.imageRadiusTopLeft = canvas.canvas.querySelector("#radius-image-topleft");
         this.imageRadiusTopRight = canvas.canvas.querySelector("#radius-image-topright");
@@ -116,6 +124,7 @@ export default class CanvasEditorUi {
     }
 
     addEventListener() {
+        // shape
         this.prompt?.addEventListener('input', (e: any) => {
             if (!this.shape) return;
             this.shape.id(`${e.target.value}`);
@@ -166,8 +175,21 @@ export default class CanvasEditorUi {
         this.downButton?.addEventListener('click', () => {
             this.shape?.moveDown();
         })
+
+        // stage
+        this.generateButton?.addEventListener("click", () => {
+            console.log(konvaSettings.stage.toJSON());
+        })
+        this.mainPrompt?.addEventListener('input', (e: any) => {
+            konvaSettings.stage.id(`${e.target.value}`)
+        })
         this.backgroundColorStage?.addEventListener('input', (e: any) => {
             konvaSettings.stage.container().style.backgroundColor = e.target.value;
+        })
+
+        // text
+        this.textPrompt?.addEventListener("input", (e: any) => {
+            this.text?.id(`${e.target.value}`);
         })
         this._textColor?.addEventListener("input", (e: any) => {
             this.text?.fill(`${e.target.value}`);
@@ -183,6 +205,11 @@ export default class CanvasEditorUi {
         })
         this._textDown?.addEventListener("click", (e: any) => {
             this.text?.moveDown();
+        })
+
+        // image
+        this.imagePrompt?.addEventListener("input", (e: any) => {
+            this.image?.id(`${e.target.value}`);
         })
         this._imageUrl?.addEventListener("input", (e: any) => {
             if (this.image) {
@@ -236,6 +263,8 @@ export default class CanvasEditorUi {
             this.shape = null;
 
             // @ts-ignore
+            this.textPrompt.value = target.id()
+            // @ts-ignore
             this._textColor.value = target.fill();
             // @ts-ignore
             this._textSize.value = target.fontSize();
@@ -248,6 +277,8 @@ export default class CanvasEditorUi {
             this.shape = null;
             this.text = null;
 
+            // @ts-ignore
+            this.imagePrompt.value = target.id();
             // @ts-ignore
             this._imageUrl.value = target.image().src;
 
@@ -288,6 +319,8 @@ export default class CanvasEditorUi {
         this.shape = null;
         this.text = null;
         this.image = null;
+        // @ts-ignore
+        this.mainPrompt.value = konvaSettings.stage.id();
         // @ts-ignore
         canvasEditorUi.backgroundColorStage.value = konvaSettings.stage.style.backgroundColor;
     }
