@@ -1,6 +1,6 @@
 import {Command} from "@/components/Toolbar";
 import Konva from "konva";
-import {konvaSettings} from "@/scripts/content";
+import {canvasEditorUi, konvaSettings} from "@/scripts/content";
 
 export class ImageCommand implements Command {
     private image: Image;
@@ -42,6 +42,9 @@ export class Image {
                 name: 'rect',
             });
             konvaSettings.layer.add(darthNode);
+            konvaSettings.transfomer.nodes([darthNode]);
+            canvasEditorUi.updateEditor(darthNode);
+            canvasEditorUi.infoSetting(darthNode);
         });
 
     }
