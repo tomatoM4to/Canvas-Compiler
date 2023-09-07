@@ -212,6 +212,27 @@
     display: none;
 }
 
+#cc-canvas-stage-editor button {
+    background-color: #2a2a2a;
+    color: #f5f5f5;
+    border: 1px solid #444;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+#cc-canvas-stage-editor button:hover {
+    background-color: #3a3a3a;
+    border-color: #555;
+}
+
+#cc-canvas-stage-editor button:active {
+    background-color: #1a1a1a;
+}
+
+
 /* context */
 #canvas-compiler-menu {
     position: absolute;
