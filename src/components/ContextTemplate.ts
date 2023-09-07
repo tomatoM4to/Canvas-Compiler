@@ -13,6 +13,16 @@ export default class ContextTemplate {
     resetContextTemplate(template: string) {
         // @ts-ignore
         this.context?.innerHTML = template;
+        let c = this.context?.querySelector("#canvas-compiler-delete-button");
+
+        // @ts-ignore
+        c.addEventListener("click", () => {
+            if (konvaSettings.transfomer.nodes().length === 0) return;
+            konvaSettings.transfomer.nodes().forEach((node) => {
+                node.destroy();
+            })
+            konvaSettings.transfomer.nodes([]);
+        })
     }
 
     injectContent() {
