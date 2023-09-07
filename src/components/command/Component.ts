@@ -1,5 +1,5 @@
 import Konva from "konva";
-import {konvaSettings} from "@/scripts/content";
+import {canvasEditorUi, konvaSettings} from "@/scripts/content";
 import {PaletteElements} from "@/components/Pallete";
 import {Command} from "@/components/Toolbar";
 
@@ -55,6 +55,12 @@ export class Component {
 
     private mouseupHandler() {
         if (!this.isDrawing) return;
+
+        // @ts-ignore
+        konvaSettings.transfomer.nodes([this.rect]);
+        // @ts-ignore
+        canvasEditorUi.updateEditor(this.rect);
+        canvasEditorUi.infoSetting(this.rect);
         this.isDrawing = false;
     }
 

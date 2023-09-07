@@ -1,4 +1,3 @@
-
 <div class="cc-canvas-container">
     <div class="cc-canvas-resizer">
         <div id="cc-canvas-resizer-icon"></div>
@@ -78,6 +77,37 @@
                 <label>
                     <input id="canvas-compiler-background-stage" type="color">
                 </label>
+            </div>
+        </div>
+
+        <div id="cc-canvas-text-editor" class="cc-canvas-compiler-customize cc-canvas-compiler-display-none">
+            <h2>Color</h2>
+            <div class="cc-canvas-modify-ui">
+                <label>
+                    <input id="canvas-compiler-text-color" type="color">
+                </label>
+            </div>
+            <h2>Size</h2>
+            <div class="cc-canvas-modify-ui">
+                <label>
+                    <input id="canvas-compiler-text-size" type="number">
+                </label>
+            </div>
+            <h2>Style</h2>
+            <div class="cc-canvas-modify-ui">
+                <label>
+                    <select id="canvas-compiler-text-weight">
+                        <option value="normal">Normal</option>
+                        <option value="bold">Bold</option>
+                        <option value="italic normal">Italic Normal</option>
+                        <option value="italic bold">Italic Bold</option>
+                    </select>
+                </label>
+            </div>
+            <h2>Z-index</h2>
+            <div class="cc-canvas-modify-ui">
+                <button id="canvas-compiler-text-up-button">UP</button>
+                <button id="canvas-compiler-text-down-button">DOWN</button>
             </div>
         </div>
     </div>

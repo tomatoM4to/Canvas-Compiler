@@ -56,16 +56,26 @@ export class Cursor {
     }
 
     private mouseDown(e: any) {
-        if (konvaSettings.transfomer.nodes().length >= 1) {
-            return;
-        }
+        if (
+            e.target.name().startsWith("top-left") ||
+            e.target.name().startsWith("top-center") ||
+            e.target.name().startsWith('top-right') ||
+            e.target.name().startsWith('middle-left') ||
+            e.target.name().startsWith('middle-right') ||
+            e.target.name().startsWith('bottom-left') ||
+            e.target.name().startsWith('bottom-center') ||
+            e.target.name().startsWith('bottom-right') ||
+            e.target.name().startsWith('rotater') ||
+            konvaSettings.transfomer.nodes().length >= 2
+        ) return;
+
+
         if (e.target !== konvaSettings.stage) {
             konvaSettings.transfomer.nodes([e.target]);
 
-            canvasEditorUi.stageEditor?.classList.add("cc-canvas-compiler-display-none");
-            canvasEditorUi.shapeEditor?.classList.remove("cc-canvas-compiler-display-none");
+            canvasEditorUi.updateEditor(e.target);
 
-            canvasEditorUi.shapeInfoSetting(e.target);
+            canvasEditorUi.infoSetting(e.target);
             return;
         }
 
@@ -124,8 +134,7 @@ export class Cursor {
         // if click on empty area - remove all selections
         if (e.target === konvaSettings.stage) {
             konvaSettings.transfomer.nodes([]);
-            canvasEditorUi.stageEditor?.classList.remove("cc-canvas-compiler-display-none");
-            canvasEditorUi.shapeEditor?.classList.add("cc-canvas-compiler-display-none");
+            canvasEditorUi.updateEditor(e.target);
             return;
         }
 
