@@ -51,7 +51,7 @@ export class Text {
         canvasEditorUi.updateEditor(text);
         konvaSettings.transfomer.nodes([text]);
         text.on("dblclick", () => this.dbClickEvent(text));
-        canvasEditorUi.text = text;
+        canvasEditorUi.infoSetting(text);
     }
 
     private dbClickEvent(text: Konva.Text) {

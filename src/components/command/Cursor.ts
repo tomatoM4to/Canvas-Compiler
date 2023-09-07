@@ -75,7 +75,7 @@ export class Cursor {
 
             canvasEditorUi.updateEditor(e.target);
 
-            canvasEditorUi.shapeInfoSetting(e.target);
+            canvasEditorUi.infoSetting(e.target);
             return;
         }
 
