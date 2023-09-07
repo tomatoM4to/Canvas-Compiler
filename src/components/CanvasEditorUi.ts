@@ -232,6 +232,8 @@ export default class CanvasEditorUi {
     infoSetting(target: any) {
         if (target instanceof Konva.Text) {
             this.text = target;
+            this.image = null;
+            this.shape = null;
 
             // @ts-ignore
             this._textColor.value = target.fill();
@@ -243,6 +245,8 @@ export default class CanvasEditorUi {
         }
         if (target instanceof Konva.Image) {
             this.image = target;
+            this.shape = null;
+            this.text = null;
 
             // @ts-ignore
             this._imageUrl.value = target.image().src;
@@ -259,7 +263,9 @@ export default class CanvasEditorUi {
         }
 
         if (target instanceof Konva.Shape) {
-            canvasEditorUi.shape = target;
+            this.shape = target;
+            this.text = null;
+            this.image = null;
 
             // @ts-ignore
             canvasEditorUi.prompt.value = target.id();
@@ -279,8 +285,18 @@ export default class CanvasEditorUi {
             canvasEditorUi.stroke.value = target.strokeWidth();
             return;
         }
+        this.shape = null;
+        this.text = null;
+        this.image = null;
         // @ts-ignore
         canvasEditorUi.backgroundColorStage.value = konvaSettings.stage.style.backgroundColor;
+    }
+
+    getCurrentShape(): Konva.Shape | Konva.Image | Konva.Text | null {
+        if (this.text) return this.text;
+        if (this.image) return this.image;
+        if (this.shape) return this.shape;
+        return null;
     }
 
     updateEditor(target: Konva.Shape | Konva.Text | Konva.Stage | Konva.Image) {
