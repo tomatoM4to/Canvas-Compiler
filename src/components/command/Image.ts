@@ -103,6 +103,7 @@ export class Image {
                 y: this.y1,
                 width: this.selectionRectangle.width(),
                 height: this.selectionRectangle.height(),
+                cornerRadius: [0, 20, 0, 20],
                 name: 'rect',
             });
             konvaSettings.layer.add(darthNode);

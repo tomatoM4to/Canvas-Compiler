@@ -65,6 +65,10 @@ export default class CanvasEditorUi {
 
     // image
     private _imageUrl: HTMLElement | null = null;
+    private imageRadiusTopLeft: HTMLElement | null = null;
+    private imageRadiusTopRight: HTMLElement | null = null;
+    private imageRadiusBottomRight: HTMLElement | null = null;
+    private imageRadiusBottomLeft: HTMLElement | null = null;
     private imageUp: HTMLElement | null = null;
     private imageDown: HTMLElement | null = null;
 
@@ -103,6 +107,10 @@ export default class CanvasEditorUi {
 
         // image ui
         this._imageUrl = canvas.canvas.querySelector("#canvas-compiler-image-url");
+        this.imageRadiusTopLeft = canvas.canvas.querySelector("#radius-image-topleft");
+        this.imageRadiusTopRight = canvas.canvas.querySelector("#radius-image-topright");
+        this.imageRadiusBottomRight = canvas.canvas.querySelector("#radius-image-bottomright");
+        this.imageRadiusBottomLeft = canvas.canvas.querySelector("#radius-image-bottomleft");
         this.imageUp = canvas.canvas.querySelector("#canvas-compiler-image-up-button");
         this.imageDown = canvas.canvas.querySelector("#canvas-compiler-image-down-button");
     }
@@ -186,6 +194,33 @@ export default class CanvasEditorUi {
                 htmlImage.src = e.target.value;
             }
         })
+        this.imageRadiusTopLeft?.addEventListener("input", (e: any) => {
+            if (!this.image) return;
+            // @ts-ignore
+            this.image.cornerRadius()[0] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+        this.imageRadiusTopRight?.addEventListener("input", (e: any) => {
+            if (!this.image) return;
+            // @ts-ignore
+            this.image.cornerRadius()[1] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+
+        this.imageRadiusBottomRight?.addEventListener("input", (e: any) => {
+            if (!this.image) return;
+            // @ts-ignore
+            this.image.cornerRadius()[2] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+
+        this.imageRadiusBottomLeft?.addEventListener("input", (e: any) => {
+            if (!this.image) return;
+            // @ts-ignore
+            this.image.cornerRadius()[3] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+
         this.imageUp?.addEventListener("click", (e: any) => {
             this.image?.moveUp();
         })
@@ -211,6 +246,15 @@ export default class CanvasEditorUi {
 
             // @ts-ignore
             this._imageUrl.value = target.image().src;
+
+            // @ts-ignore
+            this.imageRadiusTopLeft.value = target.cornerRadius()[0];
+            // @ts-ignore
+            this.imageRadiusTopRight.value = target.cornerRadius()[1];
+            // @ts-ignore
+            this.imageRadiusBottomRight.value = target.cornerRadius()[2];
+            // @ts-ignore
+            this.imageRadiusBottomLeft.value = target.cornerRadius()[3];
             return;
         }
 
@@ -259,7 +303,6 @@ export default class CanvasEditorUi {
             this.stageEditor?.classList.add("cc-canvas-compiler-display-none");
             this.textEditor?.classList.add("cc-canvas-compiler-display-none");
             this._imageEditor?.classList.add("cc-canvas-compiler-display-none");
-            console.log(`shape update`);
             return;
         }
         this.shapeEditor?.classList.add("cc-canvas-compiler-display-none");
