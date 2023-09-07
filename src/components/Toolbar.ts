@@ -1,3 +1,5 @@
+import {konvaSettings} from "@/scripts/content";
+
 export interface Command {
     addEvent(): void;
     removeEvent(): void;
@@ -15,6 +17,7 @@ export class Toolbar {
     }
 
     addEvent() {
+        konvaSettings.transfomer.moveToTop();
         this.command.addEvent();
     }
 

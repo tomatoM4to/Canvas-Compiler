@@ -10,6 +10,15 @@ export default class CanvasEditorUi {
     set text(value: Konva.Text | null) {
         this._text = value;
     }
+
+    get image(): Konva.Image | null {
+        return this._image;
+    }
+
+    set image(value: Konva.Image | null) {
+        this._image = value;
+    }
+
     get stageEditor(): HTMLElement | null {
         return this._stageEditor;
     }
@@ -22,11 +31,13 @@ export default class CanvasEditorUi {
 
     private _shape: Konva.Shape | null = null;
     private _text: Konva.Text | null = null;
+    private _image: Konva.Image | null = null;
 
     // editor
     private _shapeEditor: HTMLElement | null = null;
     private _stageEditor: HTMLElement | null = null;
     private _textEditor: HTMLElement | null = null;
+    private _imageEditor: HTMLElement | null = null;
 
     // shape
     private _prompt: HTMLElement | null = null;
@@ -52,6 +63,15 @@ export default class CanvasEditorUi {
     private _textUp: HTMLElement | null = null;
     private _textDown: HTMLElement | null = null;
 
+    // image
+    private _imageUrl: HTMLElement | null = null;
+    private imageRadiusTopLeft: HTMLElement | null = null;
+    private imageRadiusTopRight: HTMLElement | null = null;
+    private imageRadiusBottomRight: HTMLElement | null = null;
+    private imageRadiusBottomLeft: HTMLElement | null = null;
+    private imageUp: HTMLElement | null = null;
+    private imageDown: HTMLElement | null = null;
+
     constructor(canvas: CanvasElements) {
         if (!canvas.canvas) return;
 
@@ -59,6 +79,7 @@ export default class CanvasEditorUi {
         this._shapeEditor = canvas.canvas.querySelector("#cc-canvas-shape-editor");
         this._stageEditor = canvas.canvas.querySelector("#cc-canvas-stage-editor");
         this._textEditor = canvas.canvas.querySelector("#cc-canvas-text-editor");
+        this._imageEditor = canvas.canvas.querySelector("#cc-canvas-image-editor");
 
         // shape editor ui
         this._prompt = canvas.canvas.querySelector("#canvas-compiler-prompt");
@@ -83,6 +104,15 @@ export default class CanvasEditorUi {
         this._textWeight = canvas.canvas.querySelector("#canvas-compiler-text-weight");
         this._textUp = canvas.canvas.querySelector("#canvas-compiler-text-up-button");
         this._textDown = canvas.canvas.querySelector("#canvas-compiler-text-down-button");
+
+        // image ui
+        this._imageUrl = canvas.canvas.querySelector("#canvas-compiler-image-url");
+        this.imageRadiusTopLeft = canvas.canvas.querySelector("#radius-image-topleft");
+        this.imageRadiusTopRight = canvas.canvas.querySelector("#radius-image-topright");
+        this.imageRadiusBottomRight = canvas.canvas.querySelector("#radius-image-bottomright");
+        this.imageRadiusBottomLeft = canvas.canvas.querySelector("#radius-image-bottomleft");
+        this.imageUp = canvas.canvas.querySelector("#canvas-compiler-image-up-button");
+        this.imageDown = canvas.canvas.querySelector("#canvas-compiler-image-down-button");
     }
 
     addEventListener() {
@@ -154,6 +184,49 @@ export default class CanvasEditorUi {
         this._textDown?.addEventListener("click", (e: any) => {
             this.text?.moveDown();
         })
+        this._imageUrl?.addEventListener("input", (e: any) => {
+            if (this.image) {
+                let htmlImage: HTMLImageElement = this.image.image() as HTMLImageElement;
+                htmlImage.onload = () => {
+                    // @ts-ignore
+                    this.image.getLayer()?.draw();
+                };
+                htmlImage.src = e.target.value;
+            }
+        })
+        this.imageRadiusTopLeft?.addEventListener("input", (e: any) => {
+            if (!this.image) return;
+            // @ts-ignore
+            this.image.cornerRadius()[0] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+        this.imageRadiusTopRight?.addEventListener("input", (e: any) => {
+            if (!this.image) return;
+            // @ts-ignore
+            this.image.cornerRadius()[1] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+
+        this.imageRadiusBottomRight?.addEventListener("input", (e: any) => {
+            if (!this.image) return;
+            // @ts-ignore
+            this.image.cornerRadius()[2] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+
+        this.imageRadiusBottomLeft?.addEventListener("input", (e: any) => {
+            if (!this.image) return;
+            // @ts-ignore
+            this.image.cornerRadius()[3] = e.target.value;
+            konvaSettings.layer.draw();
+        })
+
+        this.imageUp?.addEventListener("click", (e: any) => {
+            this.image?.moveUp();
+        })
+        this.imageDown?.addEventListener("click", (e: any) => {
+            this.image?.moveDown();
+        })
     }
 
     infoSetting(target: any) {
@@ -168,6 +241,23 @@ export default class CanvasEditorUi {
             this._textWeight.value = target.fontStyle();
             return;
         }
+        if (target instanceof Konva.Image) {
+            this.image = target;
+
+            // @ts-ignore
+            this._imageUrl.value = target.image().src;
+
+            // @ts-ignore
+            this.imageRadiusTopLeft.value = target.cornerRadius()[0];
+            // @ts-ignore
+            this.imageRadiusTopRight.value = target.cornerRadius()[1];
+            // @ts-ignore
+            this.imageRadiusBottomRight.value = target.cornerRadius()[2];
+            // @ts-ignore
+            this.imageRadiusBottomLeft.value = target.cornerRadius()[3];
+            return;
+        }
+
         if (target instanceof Konva.Shape) {
             canvasEditorUi.shape = target;
 
@@ -193,24 +283,32 @@ export default class CanvasEditorUi {
         canvasEditorUi.backgroundColorStage.value = konvaSettings.stage.style.backgroundColor;
     }
 
-    updateEditor(target: Konva.Shape | Konva.Text | Konva.Stage) {
+    updateEditor(target: Konva.Shape | Konva.Text | Konva.Stage | Konva.Image) {
         if (target instanceof Konva.Text) {
             this.shapeEditor?.classList.add("cc-canvas-compiler-display-none");
             this.stageEditor?.classList.add("cc-canvas-compiler-display-none");
             this.textEditor?.classList.remove("cc-canvas-compiler-display-none");
-            console.log(`test update`);
+            this._imageEditor?.classList.add("cc-canvas-compiler-display-none");
+            return;
+        }
+        if (target instanceof  Konva.Image) {
+            this.shapeEditor?.classList.add("cc-canvas-compiler-display-none");
+            this.stageEditor?.classList.add("cc-canvas-compiler-display-none");
+            this.textEditor?.classList.add("cc-canvas-compiler-display-none");
+            this._imageEditor?.classList.remove("cc-canvas-compiler-display-none");
             return;
         }
         if (target instanceof Konva.Shape) {
             this.shapeEditor?.classList.remove("cc-canvas-compiler-display-none");
             this.stageEditor?.classList.add("cc-canvas-compiler-display-none");
             this.textEditor?.classList.add("cc-canvas-compiler-display-none");
-            console.log(`shape update`);
+            this._imageEditor?.classList.add("cc-canvas-compiler-display-none");
             return;
         }
         this.shapeEditor?.classList.add("cc-canvas-compiler-display-none");
         this.stageEditor?.classList.remove("cc-canvas-compiler-display-none");
         this.textEditor?.classList.add("cc-canvas-compiler-display-none");
+        this._imageEditor?.classList.add("cc-canvas-compiler-display-none");
         return;
     }
 

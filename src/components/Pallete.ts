@@ -1,4 +1,4 @@
-import {componentCommand, cusorCommand, snapCommand, textCommand, toolbar} from "@/scripts/content";
+import {componentCommand, cusorCommand, imageCommand, snapCommand, textCommand, toolbar} from "@/scripts/content";
 
 export class PaletteElements {
     private static instance: PaletteElements;
@@ -67,6 +67,13 @@ export class PaletteElements {
             this.textButton?.addEventListener("click", () => {
                 toolbar.removeEvent();
                 toolbar.setCommand(textCommand);
+                toolbar.addEvent();
+            })
+
+            this.imageButton = this.palette.querySelector("#image");
+            this.imageButton?.addEventListener("click", () => {
+                toolbar.removeEvent();
+                toolbar.setCommand(imageCommand);
                 toolbar.addEvent();
             })
         }
