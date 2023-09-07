@@ -1,6 +1,7 @@
 import Konva from "konva";
 import {CanvasElements} from "@/components/Canvas";
 import {canvasEditorUi, konvaSettings} from "@/scripts/content";
+import chatGPT from "@/components/generate";
 
 export default class CanvasEditorUi {
     get text(): Konva.Text | null {
@@ -178,7 +179,7 @@ export default class CanvasEditorUi {
 
         // stage
         this.generateButton?.addEventListener("click", () => {
-            console.log(konvaSettings.stage.toJSON());
+            chatGPT(konvaSettings.stage.toJSON());
         })
         this.mainPrompt?.addEventListener('input', (e: any) => {
             konvaSettings.stage.id(`${e.target.value}`)
