@@ -60,6 +60,7 @@ export class Component {
         konvaSettings.transfomer.nodes([this.rect]);
         // @ts-ignore
         canvasEditorUi.updateEditor(this.rect);
+        // @ts-ignore
         canvasEditorUi.infoSetting(this.rect);
         this.isDrawing = false;
     }
