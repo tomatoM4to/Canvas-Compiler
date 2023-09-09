@@ -1,5 +1,5 @@
 import {Command} from "@/components/Toolbar";
-import {canvas, canvasEditorUi, konvaSettings} from "@/scripts/content";
+import {canvas, canvasEditorUi, konvaSettings} from "@/app/content";
 import Konva from "konva";
 
 export class CursorCommand implements Command {

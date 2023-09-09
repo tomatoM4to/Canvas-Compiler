@@ -1,5 +1,5 @@
 import Konva from "konva";
-import {canvasEditorUi, konvaSettings} from "@/scripts/content";
+import {canvasEditorUi, konvaSettings} from "@/app/content";
 import {PaletteElements} from "@/components/Pallete";
 import {Command} from "@/components/Toolbar";
 

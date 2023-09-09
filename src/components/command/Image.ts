@@ -1,6 +1,6 @@
 import {Command} from "@/components/Toolbar";
 import Konva from "konva";
-import {canvasEditorUi, konvaSettings} from "@/scripts/content";
+import {canvasEditorUi, konvaSettings} from "@/app/content";
 
 export class ImageCommand implements Command {
     private image: Image;

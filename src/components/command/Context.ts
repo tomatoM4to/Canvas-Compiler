@@ -1,5 +1,5 @@
 import {Command} from "@/components/Toolbar";
-import {context, konvaSettings} from "@/scripts/content";
+import {context, konvaSettings} from "@/app/content";
 
 export class ContextCommand implements Command {
     private context: Context;

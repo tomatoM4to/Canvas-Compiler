@@ -1,5 +1,5 @@
 import {Command} from "@/components/Toolbar";
-import {konvaSettings} from "@/scripts/content";
+import {konvaSettings} from "@/app/content";
 import Konva from "konva";
 
 export class SnapCommand implements Command {

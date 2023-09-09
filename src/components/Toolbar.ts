@@ -1,4 +1,4 @@
-import {konvaSettings} from "@/scripts/content";
+import {konvaSettings} from "@/app/content";
 
 export interface Command {
     addEvent(): void;

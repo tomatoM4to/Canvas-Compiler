@@ -1,6 +1,6 @@
 import Konva from "konva";
 import {CanvasElements} from "@/components/Canvas";
-import {konvaSettings} from "@/scripts/content";
+import {konvaSettings} from "@/app/content";
 import chatGPT from "@/components/generate";
 
 export default class CanvasEditorUi {

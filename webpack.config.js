@@ -7,13 +7,13 @@ module.exports = {
     // mode: "development",
     watch: true,
     entry: {
-        // popup: path.resolve(__dirname, "src", "scripts", "popup.ts"),
-        background: path.resolve(__dirname, "src", "scripts", "background.ts"),
-        content: path.resolve(__dirname, "src", "scripts", "content.ts"),
+        // popup: path.resolve(__dirname, "src", "app", "popup.ts"),
+        background: path.resolve(__dirname, "src", "app", "background.ts"),
+        content: path.resolve(__dirname, "src", "app", "content.ts"),
     },
     output: {
         path: path.join(__dirname, "dist"),
-        filename: "scripts/[name].js",
+        filename: "app/[name].js",
     },
     resolve: {
         extensions: [".ts", ".js"],
