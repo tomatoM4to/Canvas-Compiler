@@ -72,14 +72,12 @@ export class Image {
         this.x2 = konvaSettings.stage.getPointerPosition()?.x;
         this.y2 = konvaSettings.stage.getPointerPosition()?.y;
 
+        if (!this.x1 || !this.x2 || !this.y1 || !this.y2) return;
+
         this.selectionRectangle.setAttrs({
-            // @ts-ignore
             x: Math.min(this.x1, this.x2),
-            // @ts-ignore
             y: Math.min(this.y1, this.y2),
-            // @ts-ignore
             width: Math.abs(this.x2 - this.x1),
-            // @ts-ignore
             height: Math.abs(this.y2 - this.y1),
         });
     }

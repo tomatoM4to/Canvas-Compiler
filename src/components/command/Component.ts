@@ -33,12 +33,13 @@ export class Component {
     }
 
     private mousedownHandler() {
+        let pointerPosition = konvaSettings.stage.getPointerPosition();
+        if (!pointerPosition) return;
+
         this.isDrawing = true;
         this.rect = new Konva.Rect({
-            // @ts-ignore
-            x: konvaSettings.stage.getPointerPosition().x,
-            // @ts-ignore
-            y: konvaSettings.stage.getPointerPosition().y,
+            x: pointerPosition.x,
+            y: pointerPosition.y,
             width: 0,
             height: 0,
             fill: PaletteElements.getInstance().color,
@@ -54,24 +55,19 @@ export class Component {
     }
 
     private mouseupHandler() {
-        if (!this.isDrawing) return;
+        if (!this.isDrawing || !this.rect) return;
 
-        // @ts-ignore
         konvaSettings.transfomer.nodes([this.rect]);
-        // @ts-ignore
         canvasEditorUi.updateEditor(this.rect);
-        // @ts-ignore
         canvasEditorUi.infoSetting(this.rect);
         this.isDrawing = false;
     }
 
     private mousemoveHandler() {
-        if (!this.isDrawing) return false;
-        // @ts-ignore
-        let newWidth = konvaSettings.stage.getPointerPosition().x - this.rect.x();
-        // @ts-ignore
-        let newHeight = konvaSettings.stage.getPointerPosition().y - this.rect.y();
-        // @ts-ignore
+        let pointerPosition = konvaSettings.stage.getPointerPosition();
+        if (!this.isDrawing || !pointerPosition || !this.rect) return false;
+        let newWidth = pointerPosition.x - this.rect.x();
+        let newHeight = pointerPosition.y - this.rect.y();
         this.rect.width(newWidth).height(newHeight);
         konvaSettings.layer.batchDraw();
     }

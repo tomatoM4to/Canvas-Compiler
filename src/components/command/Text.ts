@@ -66,7 +66,7 @@ export class Text {
             y: konvaSettings.stage.container().offsetTop + textPosition.y,
         };
 
-        let textarea = document.createElement('textarea');
+        let textarea: HTMLTextAreaElement = document.createElement('textarea');
         document.body.appendChild(textarea);
 
         textarea.value = text.text();
@@ -83,8 +83,7 @@ export class Text {
         textarea.style.background = 'none';
         textarea.style.outline = 'none';
         textarea.style.resize = 'none';
-        // @ts-ignore
-        textarea.style.lineHeight = text.lineHeight();
+        textarea.style.lineHeight = text.lineHeight().toString();
         textarea.style.fontFamily = text.fontFamily();
         textarea.style.transformOrigin = 'left top';
         textarea.style.textAlign = text.align();
@@ -116,7 +115,7 @@ export class Text {
         textarea.focus();
 
         function removeTextarea() {
-            // @ts-ignore
+            if (!textarea.parentNode) return;
             textarea.parentNode.removeChild(textarea);
             window.removeEventListener('click', handleOutsideClick);
             text.show();

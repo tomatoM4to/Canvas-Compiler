@@ -105,10 +105,8 @@ export class Snap {
 
             let box = guideItem.getClientRect();
 
-            // @ts-ignore
-            vertical.push([box.x, box.x + box.width, box.x + box.width / 2]);
-            // @ts-ignore
-            horizontal.push([box.y, box.y + box.height, box.y + box.height / 2]);
+            vertical.push(...[box.x, box.x + box.width, box.x + box.width / 2]);
+            horizontal.push(...[box.y, box.y + box.height, box.y + box.height / 2]);
         });
         return {
             vertical: vertical.flat(),

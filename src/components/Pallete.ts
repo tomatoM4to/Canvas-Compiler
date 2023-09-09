@@ -44,9 +44,9 @@ export class PaletteElements {
                 this.dragEventListener(this.paletteContainer, this.paletteMovingButton);
 
             this.colorPicker = this.palette.querySelector("#cc-color-picker");
-            this.colorPicker?.addEventListener('input', (e) => {
-                // @ts-ignore;
-                this._color = e.target.value;
+            this.colorPicker?.addEventListener('input', (e: Event) => {
+                let target = e.target as HTMLInputElement;
+                this._color = target.value;
             })
 
             this.cursorButton = this.palette.querySelector("#cursor");
