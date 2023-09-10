@@ -1,4 +1,4 @@
-import {componentCommand, cusorCommand, imageCommand, snapCommand, textCommand, toolbar} from "@/app/content";
+import {componentCommand, cusorCommand, imageCommand, textCommand, toolbar} from "@/app/content";
 
 export class PaletteElements {
     private static instance: PaletteElements;

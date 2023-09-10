@@ -1,6 +1,6 @@
-import {Command} from "@/components/Toolbar";
+import {Command} from "@/global/Toolbar";
 import Konva from "konva";
-import {canvasEditorUi, konvaSettings} from "@/app/content";
+import {canvasEditorUi, konvaState} from "@/app/content";
 
 export class ImageCommand implements Command {
     private image: Image;
@@ -32,32 +32,32 @@ export class Image {
             dash: [4, 4],
             visible: false,
         });
-        konvaSettings.layer.add(this.selectionRectangle);
+        konvaState.layer.add(this.selectionRectangle);
     }
 
     addEvent() {
         this.selectionRectangle.moveToTop();
 
-        konvaSettings.stage.on('mousedown touchstart', (e) => this.mouseDown(e));
-        konvaSettings.stage.on('mousemove touchmove', (e) => this.mouseMove(e));
-        konvaSettings.stage.on('mouseup touchend', (e) => this.mouseUp(e));
+        konvaState.stage.on('mousedown touchstart', (e) => this.mouseDown(e));
+        konvaState.stage.on('mousemove touchmove', (e) => this.mouseMove(e));
+        konvaState.stage.on('mouseup touchend', (e) => this.mouseUp(e));
 
     }
     removeEvent() {
-        konvaSettings.stage.off('mousedown touchstart');
-        konvaSettings.stage.off('mousemove touchmove');
-        konvaSettings.stage.off('mouseup touchend');
+        konvaState.stage.off('mousedown touchstart');
+        konvaState.stage.off('mousemove touchmove');
+        konvaState.stage.off('mouseup touchend');
     }
 
     private mouseDown(e: any) {
-        if (e.target !== konvaSettings.stage) return;
+        if (e.target !== konvaState.stage) return;
 
         e.evt.preventDefault();
 
-        this.x1 = konvaSettings.stage.getPointerPosition()?.x;
-        this.y1 = konvaSettings.stage.getPointerPosition()?.y;
-        this.x2 = konvaSettings.stage.getPointerPosition()?.x;
-        this.y2 = konvaSettings.stage.getPointerPosition()?.y;
+        this.x1 = konvaState.stage.getPointerPosition()?.x;
+        this.y1 = konvaState.stage.getPointerPosition()?.y;
+        this.x2 = konvaState.stage.getPointerPosition()?.x;
+        this.y2 = konvaState.stage.getPointerPosition()?.y;
 
         this.selectionRectangle.visible(true);
         this.selectionRectangle.width(0);
@@ -69,8 +69,8 @@ export class Image {
             return;
         }
         e.evt.preventDefault();
-        this.x2 = konvaSettings.stage.getPointerPosition()?.x;
-        this.y2 = konvaSettings.stage.getPointerPosition()?.y;
+        this.x2 = konvaState.stage.getPointerPosition()?.x;
+        this.y2 = konvaState.stage.getPointerPosition()?.y;
 
         if (!this.x1 || !this.x2 || !this.y1 || !this.y2) return;
 
@@ -91,7 +91,7 @@ export class Image {
         setTimeout(() => {
             this.selectionRectangle.visible(false);
         });
-        let pos = konvaSettings.stage.getPointerPosition();
+        let pos = konvaState.stage.getPointerPosition();
         this.createImage(pos);
     }
     private createImage(pos: any) {
@@ -104,8 +104,8 @@ export class Image {
                 cornerRadius: [0, 20, 0, 20],
                 name: 'rect',
             });
-            konvaSettings.layer.add(darthNode);
-            konvaSettings.transfomer.nodes([darthNode]);
+            konvaState.layer.add(darthNode);
+            konvaState.transfomer.nodes([darthNode]);
             canvasEditorUi.updateEditor(darthNode);
             canvasEditorUi.infoSetting(darthNode);
         });

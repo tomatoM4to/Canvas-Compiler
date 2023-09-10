@@ -1,7 +1,7 @@
 import Konva from "konva";
-import {canvasEditorUi, konvaSettings} from "@/app/content";
+import {canvasEditorUi, konvaState} from "@/app/content";
 import {PaletteElements} from "@/components/Pallete";
-import {Command} from "@/components/Toolbar";
+import {Command} from "@/global/Toolbar";
 
 
 export class ComponentCommand implements Command {
@@ -22,18 +22,18 @@ export class Component {
     private isDrawing: boolean = false;
 
     addEvent() {
-        konvaSettings.stage.on("mousedown", this.mousedownHandler);
-        konvaSettings.stage.on("mousemove", this.mousemoveHandler)
-        konvaSettings.stage.on("mouseup", this.mouseupHandler)
+        konvaState.stage.on("mousedown", this.mousedownHandler);
+        konvaState.stage.on("mousemove", this.mousemoveHandler)
+        konvaState.stage.on("mouseup", this.mouseupHandler)
     }
     removeEvent() {
-        konvaSettings.stage.off("mousedown");
-        konvaSettings.stage.off("mousemove");
-        konvaSettings.stage.off("mouseup");
+        konvaState.stage.off("mousedown");
+        konvaState.stage.off("mousemove");
+        konvaState.stage.off("mouseup");
     }
 
     private mousedownHandler() {
-        let pointerPosition = konvaSettings.stage.getPointerPosition();
+        let pointerPosition = konvaState.stage.getPointerPosition();
         if (!pointerPosition) return;
 
         this.isDrawing = true;
@@ -51,25 +51,25 @@ export class Component {
             strokeWidth: 4,
             id: "primpt",
         })
-        konvaSettings.layer.add(this.rect).batchDraw();
+        konvaState.layer.add(this.rect).batchDraw();
     }
 
     private mouseupHandler() {
         if (!this.isDrawing || !this.rect) return;
 
-        konvaSettings.transfomer.nodes([this.rect]);
+        konvaState.transfomer.nodes([this.rect]);
         canvasEditorUi.updateEditor(this.rect);
         canvasEditorUi.infoSetting(this.rect);
         this.isDrawing = false;
     }
 
     private mousemoveHandler() {
-        let pointerPosition = konvaSettings.stage.getPointerPosition();
+        let pointerPosition = konvaState.stage.getPointerPosition();
         if (!this.isDrawing || !pointerPosition || !this.rect) return false;
         let newWidth = pointerPosition.x - this.rect.x();
         let newHeight = pointerPosition.y - this.rect.y();
         this.rect.width(newWidth).height(newHeight);
-        konvaSettings.layer.batchDraw();
+        konvaState.layer.batchDraw();
     }
 }
 

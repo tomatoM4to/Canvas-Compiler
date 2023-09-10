@@ -1,6 +1,6 @@
 import Konva from "konva";
 import {CanvasElements} from "@/components/Canvas";
-import {konvaSettings} from "@/app/content";
+import {konvaState} from "@/app/content";
 import chatGPT from "@/components/generate";
 
 export default class CanvasEditorUi {
@@ -112,7 +112,7 @@ export default class CanvasEditorUi {
                 return;
 
             cornerRadiusValue[0] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
         });
         this.radiusTopRight?.addEventListener('change', (event: Event) => {
             if (!this.shape) return;
@@ -124,7 +124,7 @@ export default class CanvasEditorUi {
                 return;
 
             cornerRadiusValue[1] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
         })
         this.radiusBottomRight?.addEventListener('change', (event: any) => {
             let target = event.target as HTMLInputElement;
@@ -134,7 +134,7 @@ export default class CanvasEditorUi {
                 return;
 
             cornerRadiusValue[2] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
         })
         this.radiusBottomLeft?.addEventListener('change', (event: any) => {
             let target = event.target as HTMLInputElement;
@@ -144,7 +144,7 @@ export default class CanvasEditorUi {
                 return;
 
             cornerRadiusValue[3] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
         })
         this.backgroundColor?.addEventListener('change', (e: any) => {
             if (!this.shape) return;
@@ -170,13 +170,13 @@ export default class CanvasEditorUi {
 
         // stage
         this.generateButton?.addEventListener("click", () => {
-            chatGPT(konvaSettings.stage.toJSON());
+            chatGPT(konvaState.stage.toJSON());
         })
         this.mainPrompt?.addEventListener('input', (e: any) => {
-            konvaSettings.stage.id(`${e.target.value}`)
+            konvaState.stage.id(`${e.target.value}`)
         })
         this.backgroundColorStage?.addEventListener('input', (e: any) => {
-            konvaSettings.stage.container().style.backgroundColor = e.target.value;
+            konvaState.stage.container().style.backgroundColor = e.target.value;
         })
 
         // text
@@ -207,7 +207,7 @@ export default class CanvasEditorUi {
             if (this.image) {
                 let htmlImage: HTMLImageElement = this.image.image() as HTMLImageElement;
                 htmlImage.onload = () => {
-                    konvaSettings.layer.draw();
+                    konvaState.layer.draw();
                 };
                 htmlImage.src = e.target.value;
             }
@@ -220,10 +220,10 @@ export default class CanvasEditorUi {
                 return;
 
             cornerRadiusValue[0] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
 
             cornerRadiusValue[0] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
         })
         this.imageRadiusTopRight?.addEventListener("input", (event: any) => {
             let target = event.target as HTMLInputElement;
@@ -233,10 +233,10 @@ export default class CanvasEditorUi {
                 return;
 
             cornerRadiusValue[0] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
 
             cornerRadiusValue[0] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
         })
 
         this.imageRadiusBottomRight?.addEventListener("input", (event: any) => {
@@ -247,10 +247,10 @@ export default class CanvasEditorUi {
                 return;
 
             cornerRadiusValue[0] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
 
             cornerRadiusValue[0] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
         })
 
         this.imageRadiusBottomLeft?.addEventListener("input", (event: any) => {
@@ -261,10 +261,10 @@ export default class CanvasEditorUi {
                 return;
 
             cornerRadiusValue[0] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
 
             cornerRadiusValue[0] = Number(target.value);
-            konvaSettings.layer.draw();
+            konvaState.layer.draw();
         })
 
         this.imageUp?.addEventListener("click", (e: any) => {
@@ -347,9 +347,9 @@ export default class CanvasEditorUi {
         this.shape = null;
         this.text = null;
         this.image = null;
-        this.mainPrompt.value = konvaSettings.stage.id();
+        this.mainPrompt.value = konvaState.stage.id();
         // @ts-ignore
-        this.backgroundColorStage.value = konvaSettings.stage.style.backgroundColor;
+        this.backgroundColorStage.value = konvaState.stage.style.backgroundColor;
     }
 
     updateEditor(target: Konva.Rect | Konva.Text | Konva.Stage | Konva.Image) {

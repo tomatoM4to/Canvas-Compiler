@@ -1,4 +1,4 @@
-import {konvaSettings} from "@/app/content";
+import {konvaState} from "@/app/content";
 
 export default class ContextTemplate {
     private static instance: ContextTemplate;
@@ -17,11 +17,11 @@ export default class ContextTemplate {
         if (!deleteButton) return;
 
         deleteButton.addEventListener("click", () => {
-            if (konvaSettings.transfomer.nodes().length === 0) return;
-            konvaSettings.transfomer.nodes().forEach((node) => {
+            if (konvaState.transfomer.nodes().length === 0) return;
+            konvaState.transfomer.nodes().forEach((node) => {
                 node.destroy();
             })
-            konvaSettings.transfomer.nodes([]);
+            konvaState.transfomer.nodes([]);
         })
     }
 
@@ -34,11 +34,11 @@ export default class ContextTemplate {
         if (!this.context) return;
 
         let menu: HTMLDivElement | null = this.context?.querySelector("#canvas-compiler-menu");
-        let pointerPosition = konvaSettings.stage.getPointerPosition();
+        let pointerPosition = konvaState.stage.getPointerPosition();
         if (!menu || !pointerPosition) return;
 
         menu.style.display = 'initial';
-        let containerRect = konvaSettings.stage.container().getBoundingClientRect();
+        let containerRect = konvaState.stage.container().getBoundingClientRect();
         menu.style.top = containerRect.top + pointerPosition.y + 4 + 'px';
         menu.style.left = pointerPosition.x + 4 + 'px';
     }

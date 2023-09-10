@@ -1,4 +1,4 @@
-import {konvaSettings} from "@/app/content";
+import {konvaState} from "@/app/content";
 
 export interface Command {
     addEvent(): void;
@@ -17,7 +17,7 @@ export class Toolbar {
     }
 
     addEvent() {
-        konvaSettings.transfomer.moveToTop();
+        konvaState.transfomer.moveToTop();
         this.command.addEvent();
     }
 

@@ -1,5 +1,5 @@
-import {Command} from "@/components/Toolbar";
-import {konvaSettings} from "@/app/content";
+import {Command} from "@/global/Toolbar";
+import {konvaState} from "@/app/content";
 import Konva from "konva";
 
 export class SnapCommand implements Command {
@@ -21,15 +21,15 @@ export class Snap {
     private GUIDELINE_OFFSET: number = 5;
 
     addEvent() {
-        konvaSettings.layer.on('dragmove', (e: any) => {
+        konvaState.layer.on('dragmove', (e: any) => {
             // clear all previous lines on the screen
-            konvaSettings.layer.find('.guid-line').forEach((l) => l.destroy());
+            konvaState.layer.find('.guid-line').forEach((l) => l.destroy());
 
-            if (konvaSettings.transfomer.nodes().length > 1) return;
+            if (konvaState.transfomer.nodes().length > 1) return;
 
-            let lineGuideStops = this.getLineGuideStops(konvaSettings.transfomer.nodes()[0]);
+            let lineGuideStops = this.getLineGuideStops(konvaState.transfomer.nodes()[0]);
 
-            let itemBounds = this.getObjectSnappingEdges(konvaSettings.transfomer.nodes()[0]);
+            let itemBounds = this.getObjectSnappingEdges(konvaState.transfomer.nodes()[0]);
 
             let guides = this.getGuides(lineGuideStops, itemBounds);
 
@@ -87,18 +87,18 @@ export class Snap {
             });
             e.target.absolutePosition(absPos);
         });
-        konvaSettings.layer.on('dragend', function (e) {
-            konvaSettings.layer.find('.guid-line').forEach((l) => l.destroy());
+        konvaState.layer.on('dragend', function (e) {
+            konvaState.layer.find('.guid-line').forEach((l) => l.destroy());
         });
     }
     removeEvent() {
 
     }
     private getLineGuideStops(skipShape: Konva.Node) {
-        let vertical: number[] = [0, konvaSettings.stage.width() / 2, konvaSettings.stage.width()];
-        let horizontal: number[] = [0, konvaSettings.stage.height() / 2, konvaSettings.stage.height()];
+        let vertical: number[] = [0, konvaState.stage.width() / 2, konvaState.stage.width()];
+        let horizontal: number[] = [0, konvaState.stage.height() / 2, konvaState.stage.height()];
 
-        konvaSettings.stage.find('.rect').forEach((guideItem) => {
+        konvaState.stage.find('.rect').forEach((guideItem) => {
             if (guideItem === skipShape) {
                 return;
             }
@@ -223,7 +223,7 @@ export class Snap {
                     name: 'guid-line',
                     dash: [4, 6],
                 });
-                konvaSettings.layer.add(line);
+                konvaState.layer.add(line);
                 line.absolutePosition({
                     x: 0,
                     y: lg.lineGuide,
@@ -236,7 +236,7 @@ export class Snap {
                     name: 'guid-line',
                     dash: [4, 6],
                 });
-                konvaSettings.layer.add(line);
+                konvaState.layer.add(line);
                 line.absolutePosition({
                     x: lg.lineGuide,
                     y: 0,
