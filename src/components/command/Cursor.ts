@@ -1,6 +1,8 @@
 import {Command} from "@/global/Toolbar";
 import {canvasEditorUi, konvaState} from "@/app/content";
 import Konva from "konva";
+import {KonvaEventObject} from "konva/lib/Node";
+
 
 export class CursorCommand implements Command {
     private cursor: Cursor;
