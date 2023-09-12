@@ -57,7 +57,7 @@ Chat GPT와 같은 LLM을 사용하면서 텍스트를 통해 명령을 주는 �
 - [x] **단일 셀렉팅:** 특정 그래픽 오브젝트를 단독으로 선택: [상세보기 - WIKI 이동](https://github.com/tomatoM4to/Canvas-Compiler/wiki/Grapic-Editor#%EB%8B%A8%EC%9D%BC-%EC%85%80%EB%A0%89%ED%8C%85-%EA%B8%B0%EB%8A%A5)
 - [x] **삭제:** 선택한 그래픽 오브젝트(들)을 삭제: [상세보기 - WIKI 이동](https://github.com/tomatoM4to/Canvas-Compiler/wiki/Grapic-Editor#%EC%82%AD%EC%A0%9C)
 - [x] **프롬프팅:** 선택한 오브젝트에 대한 상세한 명령어 부여
-- [x] **단일 drag & drop snap:** 오브젝트를 드래그 앤 드롭할 때 주변 오브젝트 위치에 맞춰 자동으로 정렬: [상세보기 - WIKI 이동]([https://www.openai.com/](https://github.com/tomatoM4to/Canvas-Compiler/wiki/Grapic-Editor#%EC%8A%A4%EB%83%85-%EA%B8%B0%EB%8A%A5))
+- [x] **단일 drag & drop snap:** 오브젝트를 드래그 앤 드롭할 때 주변 오브젝트 위치에 맞춰 자동으로 정렬: [상세보기 - WIKI 이동]([https://www.openai.com/](https://github.com/tomatoM4to/Canvas-Compiler/wiki/Grapic-Editor#%EC%8A%A4%EB%83%85-%EA%B8%B0%EB%8A%A5)
 - [ ] **다중 drag & drop snap:** 여러 오브젝트를 동시에 드래그 앤 드롭할 때 주변 오브젝트 위치에 맞춰 자동으로 정렬
 - [x] **resize:** 선택한 오브젝트의 크기 조정
 - [ ] **resize snap:** 다른 오브젝트에 맞추어 크기 조정
