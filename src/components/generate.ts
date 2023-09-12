@@ -41,9 +41,8 @@ export default function chatGPT(prompt: string) {
         }
     });
 
-    let textArea = document.querySelector("#prompt-textarea");
+    let textArea: HTMLTextAreaElement | null = document.querySelector("#prompt-textarea");
     if (textArea) {
-        // @ts-ignore
         textArea.value = newPrompt;
     }
 }

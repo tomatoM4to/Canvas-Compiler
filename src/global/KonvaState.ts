@@ -1,17 +1,13 @@
-import {Stage} from "konva/lib/Stage";
-import {Layer} from "konva/lib/Layer";
 import Konva from "konva";
 import {CanvasElements} from "@/components/Canvas";
 
 
-export default class KonvaSettings {
-    private static instance: KonvaSettings;
-
+export default class KonvaState {
     private _stage: Konva.Stage;
     private _layer: Konva.Layer;
     private _transfomer: Konva.Transformer;
 
-    private constructor() {
+    constructor() {
         this._stage = new Konva.Stage({
             container: 'canvas-compiler',
             width: CanvasElements.getInstance().width * 0.8,
@@ -21,6 +17,7 @@ export default class KonvaSettings {
         this._transfomer = new Konva.Transformer({
             rotationSnaps: [0, 90, 180, 270],
         });
+        this.reset();
     }
 
     reset() {
@@ -28,20 +25,13 @@ export default class KonvaSettings {
         this.layer.add(this.transfomer);
     }
 
-    get layer(): Layer {
+    get layer(): Konva.Layer {
         return this._layer;
     }
-    get stage(): Stage {
+    get stage(): Konva.Stage {
         return this._stage;
     }
     get transfomer(): Konva.Transformer {
         return this._transfomer;
-    }
-
-    public static getInstance() {
-        if (!KonvaSettings.instance) {
-            KonvaSettings.instance = new KonvaSettings();
-        }
-        return KonvaSettings.instance
     }
 }

@@ -1,6 +1,8 @@
-import {Command} from "@/components/Toolbar";
-import {canvas, canvasEditorUi, konvaSettings} from "@/scripts/content";
+import {Command} from "@/global/Toolbar";
+import {canvasEditorUi, konvaState} from "@/app/content";
 import Konva from "konva";
+import {KonvaEventObject} from "konva/lib/Node";
+
 
 export class CursorCommand implements Command {
     private cursor: Cursor;
@@ -29,30 +31,30 @@ export class Cursor {
             fill: 'rgba(0,0,255,0.5)',
             visible: false,
         });
-        konvaSettings.layer.add(this.selectionRectangle);
+        konvaState.layer.add(this.selectionRectangle);
     }
 
     addEvent() {
-        konvaSettings.layer.getChildren().forEach(shape => {
+        konvaState.layer.getChildren().forEach(shape => {
             shape.draggable(true);
         });
         // Todo If there are multiple layers, it can be modified.
         this.selectionRectangle.moveToTop();
-        konvaSettings.stage.on('mousedown touchstart', (e) => this.mouseDown(e));
-        konvaSettings.stage.on('mousemove touchmove', (e) => this.mouseMove(e));
-        konvaSettings.stage.on('mouseup touchend', (e) => this.mouseUp(e));
-        konvaSettings.stage.on('click tap', (e) => this.mouseClick(e));
+        konvaState.stage.on('mousedown touchstart', (e) => this.mouseDown(e));
+        konvaState.stage.on('mousemove touchmove', (e) => this.mouseMove(e));
+        konvaState.stage.on('mouseup touchend', (e) => this.mouseUp(e));
+        konvaState.stage.on('click tap', (e) => this.mouseClick(e));
     }
 
     removeEvent() {
-        konvaSettings.layer.getChildren().forEach(shape => {
+        konvaState.layer.getChildren().forEach(shape => {
             shape.draggable(false);
         });
-        konvaSettings.stage.off('mousedown touchstart');
-        konvaSettings.stage.off('mousemove touchmove');
-        konvaSettings.stage.off('mouseup touchend');
-        konvaSettings.stage.off('click tap');
-        konvaSettings.transfomer.nodes([]);
+        konvaState.stage.off('mousedown touchstart');
+        konvaState.stage.off('mousemove touchmove');
+        konvaState.stage.off('mouseup touchend');
+        konvaState.stage.off('click tap');
+        konvaState.transfomer.nodes([]);
     }
 
     private mouseDown(e: any) {
@@ -66,12 +68,12 @@ export class Cursor {
             e.target.name().startsWith('bottom-center') ||
             e.target.name().startsWith('bottom-right') ||
             e.target.name().startsWith('rotater') ||
-            konvaSettings.transfomer.nodes().length >= 2
+            konvaState.transfomer.nodes().length >= 2
         ) return;
 
 
-        if (e.target !== konvaSettings.stage) {
-            konvaSettings.transfomer.nodes([e.target]);
+        if (e.target !== konvaState.stage) {
+            konvaState.transfomer.nodes([e.target]);
 
             canvasEditorUi.updateEditor(e.target);
 
@@ -80,10 +82,10 @@ export class Cursor {
         }
 
         e.evt.preventDefault();
-        this.x1 = konvaSettings.stage.getPointerPosition()?.x;
-        this.y1 = konvaSettings.stage.getPointerPosition()?.y;
-        this.x2 = konvaSettings.stage.getPointerPosition()?.x;
-        this.y2 = konvaSettings.stage.getPointerPosition()?.y;
+        this.x1 = konvaState.stage.getPointerPosition()?.x;
+        this.y1 = konvaState.stage.getPointerPosition()?.y;
+        this.x2 = konvaState.stage.getPointerPosition()?.x;
+        this.y2 = konvaState.stage.getPointerPosition()?.y;
 
         this.selectionRectangle.visible(true);
         this.selectionRectangle.width(0);
@@ -95,17 +97,15 @@ export class Cursor {
             return;
         }
         e.evt.preventDefault();
-        this.x2 = konvaSettings.stage.getPointerPosition()?.x;
-        this.y2 = konvaSettings.stage.getPointerPosition()?.y;
+        this.x2 = konvaState.stage.getPointerPosition()?.x;
+        this.y2 = konvaState.stage.getPointerPosition()?.y;
+
+        if (!this.x1 || !this.x2 || !this.y1 || !this.y2) return;
 
         this.selectionRectangle.setAttrs({
-            // @ts-ignore
             x: Math.min(this.x1, this.x2),
-            // @ts-ignore
             y: Math.min(this.y1, this.y2),
-            // @ts-ignore
             width: Math.abs(this.x2 - this.x1),
-            // @ts-ignore
             height: Math.abs(this.y2 - this.y1),
         });
     }
@@ -120,20 +120,20 @@ export class Cursor {
             this.selectionRectangle.visible(false);
         });
 
-        let shapes = konvaSettings.stage.find('.rect');
+        let shapes = konvaState.stage.find('.rect');
         let box = this.selectionRectangle.getClientRect();
         let selected = shapes.filter((shape: any) =>
             Konva.Util.haveIntersection(box, shape.getClientRect())
         );
-        konvaSettings.transfomer.nodes(selected);
+        konvaState.transfomer.nodes(selected);
         canvasEditorUi.stageEditor?.classList.remove("cc-canvas-compiler-display-none");
         canvasEditorUi.shapeEditor?.classList.add("cc-canvas-compiler-display-none");
     }
 
     private mouseClick(e: any) {
         // if click on empty area - remove all selections
-        if (e.target === konvaSettings.stage) {
-            konvaSettings.transfomer.nodes([]);
+        if (e.target === konvaState.stage) {
+            konvaState.transfomer.nodes([]);
             canvasEditorUi.updateEditor(e.target);
             return;
         }
@@ -145,23 +145,23 @@ export class Cursor {
 
         // do we pressed shift or ctrl?
         const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
-        const isSelected = konvaSettings.transfomer.nodes().indexOf(e.target) >= 0;
+        const isSelected = konvaState.transfomer.nodes().indexOf(e.target) >= 0;
 
         if (!metaPressed && !isSelected) {
             // if no key pressed and the node is not selected
             // select just one
-            konvaSettings.transfomer.nodes([e.target]);
+            konvaState.transfomer.nodes([e.target]);
         } else if (metaPressed && isSelected) {
             // if we pressed keys and node was selected
             // we need to remove it from selection:
-            const nodes = konvaSettings.transfomer.nodes().slice(); // use slice to have new copy of array
+            const nodes = konvaState.transfomer.nodes().slice(); // use slice to have new copy of array
             // remove node from array
             nodes.splice(nodes.indexOf(e.target), 1);
-            konvaSettings.transfomer.nodes(nodes);
+            konvaState.transfomer.nodes(nodes);
         } else if (metaPressed && !isSelected) {
             // add the node into selection
-            const nodes = konvaSettings.transfomer.nodes().concat([e.target]);
-            konvaSettings.transfomer.nodes(nodes);
+            const nodes = konvaState.transfomer.nodes().concat([e.target]);
+            konvaState.transfomer.nodes(nodes);
         }
     }
 }

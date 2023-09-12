@@ -1,5 +1,5 @@
-import {Command} from "@/components/Toolbar";
-import {context, konvaSettings} from "@/scripts/content";
+import {Command} from "@/global/Toolbar";
+import {context, konvaState} from "@/app/content";
 
 export class ContextCommand implements Command {
     private context: Context;
@@ -17,9 +17,9 @@ export class ContextCommand implements Command {
 
 export class Context {
     addEvent() {
-        konvaSettings.stage.on("contextmenu", (e) => {
+        konvaState.stage.on("contextmenu", (e) => {
             e.evt.preventDefault();
-            if (e.target === konvaSettings.stage) return;
+            if (e.target === konvaState.stage) return;
 
             context.updatePos();
         })
