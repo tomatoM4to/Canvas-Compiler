@@ -1,3 +1,13 @@
+chrome.action.onClicked.addListener((tab) => {
+    if (tab.url && tab.url.startsWith("https://chat.openai.com/")) {
+        chrome.scripting.executeScript({
+            // @ts-ignore
+            target: { tabId: tab.id },
+            files: ["app/content.js"]
+        });
+    }
+});
+
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(
     async () => {

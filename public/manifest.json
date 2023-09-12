@@ -20,15 +20,7 @@
   "background": {
     "service_worker": "app/background.js"
   },
-  "content_scripts": [
-    {
-      "js": ["app/content.js"],
-      "matches": [
-        "https://chat.openai.com/*"
-      ]
-    }
-  ],
   "permissions": [
-    "tabs", "webNavigation"
+    "tabs", "webNavigation", "scripting", "activeTab"
   ]
 }
