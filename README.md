@@ -52,20 +52,20 @@ Chat GPT와 같은 LLM을 사용하면서 텍스트를 통해 명령을 주는 �
 ### ✨프로젝트의 주요 기능
 
 #### Graphic Editor
-- [x] **Object 수정:** 그래픽 오브젝트의 속성 및 위치를 편집
-- [x] **다중 셀렉팅:** 여러 그래픽 오브젝트를 동시에 선택
-- [x] **단일 셀렉팅:** 특정 그래픽 오브젝트를 단독으로 선택
-- [x] **삭제:** 선택한 그래픽 오브젝트(들)을 삭제
+- [x] **Object 수정:** 그래픽 오브젝트의 속성 및 위치를 편집: [가이드](https://github.com/tomatoM4to/Canvas-Compiler/wiki/Grapic-Editor#object-%EC%88%98%EC%A0%95)
+- [x] **다중 셀렉팅:** 여러 그래픽 오브젝트를 동시에 선택: [가이드](https://github.com/tomatoM4to/Canvas-Compiler/wiki/Grapic-Editor#%EB%8B%A4%EC%A4%91-%EC%85%80%EB%A0%89%ED%8C%85-%EA%B8%B0%EB%8A%A5)
+- [x] **단일 셀렉팅:** 특정 그래픽 오브젝트를 단독으로 선택: [가이드](https://github.com/tomatoM4to/Canvas-Compiler/wiki/Grapic-Editor#%EB%8B%A8%EC%9D%BC-%EC%85%80%EB%A0%89%ED%8C%85-%EA%B8%B0%EB%8A%A5)
+- [x] **삭제:** 선택한 그래픽 오브젝트(들)을 삭제: [가이드](https://github.com/tomatoM4to/Canvas-Compiler/wiki/Grapic-Editor#%EC%82%AD%EC%A0%9C)
 - [x] **프롬프팅:** 선택한 오브젝트에 대한 상세한 명령어 부여
-- [x] **단일 drag & drop snap:** 오브젝트를 드래그 앤 드롭할 때 주변 오브젝트 위치에 맞춰 자동으로 정렬
+- [x] **단일 drag & drop snap:** 오브젝트를 드래그 앤 드롭할 때 주변 오브젝트 위치에 맞춰 자동으로 정렬: [OpenAI]([https://www.openai.com/](https://github.com/tomatoM4to/Canvas-Compiler/wiki/Grapic-Editor#%EC%8A%A4%EB%83%85-%EA%B8%B0%EB%8A%A5))
 - [ ] **다중 drag & drop snap:** 여러 오브젝트를 동시에 드래그 앤 드롭할 때 주변 오브젝트 위치에 맞춰 자동으로 정렬
 - [x] **resize:** 선택한 오브젝트의 크기 조정
 - [ ] **resize snap:** 다른 오브젝트에 맞추어 크기 조정
 
 #### Compiler
-- [x] **JSON 데이터를 자연어로 생성:** 그래픽 데이터를 JSON 형식에서 자연어 형식으로 변환
+- [x] **JSON 데이터를 자연어로 생성:** 그래픽 데이터를 JSON 형식에서 자연어 형식으로 변환: [가이드](https://github.com/tomatoM4to/Canvas-Compiler/wiki/Compiler#json-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%9E%90%EC%97%B0%EC%96%B4-%EC%83%9D%EC%84%B1)
 - [ ] **다국어 지원:** 다양한 언어로 자연어 변환 지원
 
 #### 기타
-- [ ] **Dynamic Content:** 그래픽 에디터의 동적 데이터 삽입
+- [x] **Dynamic Content:** 그래픽 에디터의 동적 데이터 삽입: [가이드](https://github.com/tomatoM4to/Canvas-Compiler/wiki/%EA%B8%B0%ED%83%80#%EB%8F%99%EC%A0%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%82%BD%EC%9E%85)
 - [ ] **이전 그림 기록 세이브:** 그래픽 에디터의 작업 내역 및 이전 상태 저장
