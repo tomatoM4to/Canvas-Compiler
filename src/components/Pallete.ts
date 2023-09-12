@@ -1,4 +1,4 @@
-import {componentCommand, cusorCommand, imageCommand, snapCommand, textCommand, toolbar} from "@/scripts/content";
+import {componentCommand, cusorCommand, imageCommand, textCommand, toolbar} from "@/app/content";
 
 export class PaletteElements {
     private static instance: PaletteElements;
@@ -36,47 +36,47 @@ export class PaletteElements {
     }
 
     resetPaletteTemplate(template: string) {
-        if (this.palette) {
-            this.palette.innerHTML = template;
-            this.paletteMovingButton = this.palette.querySelector("#cc-palette-moving-icon");
-            this.paletteContainer = this.palette.querySelector(".cc-palette-container");
-            if (this.paletteContainer && this.paletteMovingButton)
-                this.dragEventListener(this.paletteContainer, this.paletteMovingButton);
+        if (!this.palette) return
+        this.palette.innerHTML = template;
+        this.paletteMovingButton = this.palette.querySelector("#cc-palette-moving-icon");
+        this.paletteContainer = this.palette.querySelector(".cc-palette-container");
 
-            this.colorPicker = this.palette.querySelector("#cc-color-picker");
-            this.colorPicker?.addEventListener('input', (e) => {
-                // @ts-ignore;
-                this._color = e.target.value;
-            })
+        if (this.paletteContainer && this.paletteMovingButton)
+            this.dragEventListener(this.paletteContainer, this.paletteMovingButton);
 
-            this.cursorButton = this.palette.querySelector("#cursor");
-            this.cursorButton?.addEventListener("click", () => {
-                toolbar.removeEvent();
-                toolbar.setCommand(cusorCommand);
-                toolbar.addEvent();
-            })
+        this.colorPicker = this.palette.querySelector("#cc-color-picker");
+        this.colorPicker?.addEventListener('input', (e: Event) => {
+            let target = e.target as HTMLInputElement;
+            this._color = target.value;
+        })
 
-            this.layoutButton = this.palette.querySelector("#layout");
-            this.layoutButton?.addEventListener("click", () => {
-                toolbar.removeEvent();
-                toolbar.setCommand(componentCommand);
-                toolbar.addEvent();
-            })
+        this.cursorButton = this.palette.querySelector("#cursor");
+        this.cursorButton?.addEventListener("click", () => {
+            toolbar.removeEvent();
+            toolbar.setCommand(cusorCommand);
+            toolbar.addEvent();
+        })
 
-            this.textButton = this.palette.querySelector("#text");
-            this.textButton?.addEventListener("click", () => {
-                toolbar.removeEvent();
-                toolbar.setCommand(textCommand);
-                toolbar.addEvent();
-            })
+        this.layoutButton = this.palette.querySelector("#layout");
+        this.layoutButton?.addEventListener("click", () => {
+            toolbar.removeEvent();
+            toolbar.setCommand(componentCommand);
+            toolbar.addEvent();
+        })
 
-            this.imageButton = this.palette.querySelector("#image");
-            this.imageButton?.addEventListener("click", () => {
-                toolbar.removeEvent();
-                toolbar.setCommand(imageCommand);
-                toolbar.addEvent();
-            })
-        }
+        this.textButton = this.palette.querySelector("#text");
+        this.textButton?.addEventListener("click", () => {
+            toolbar.removeEvent();
+            toolbar.setCommand(textCommand);
+            toolbar.addEvent();
+        })
+
+        this.imageButton = this.palette.querySelector("#image");
+        this.imageButton?.addEventListener("click", () => {
+            toolbar.removeEvent();
+            toolbar.setCommand(imageCommand);
+            toolbar.addEvent();
+        })
     }
 
     get color(): string {
@@ -100,7 +100,7 @@ export class PaletteElements {
             console.log(`pallete up 이벤트`)
         }
 
-        function dragMouseMove(event: any) {
+        function dragMouseMove(event: MouseEvent) {
             event.preventDefault();
             dx = beforeX - event.clientX;
             dy = beforeY - event.clientY;
@@ -117,7 +117,7 @@ export class PaletteElements {
             element.style.right = `${nx}px`;
         }
 
-        function dragMouseDown(event: any) {
+        function dragMouseDown(event: MouseEvent) {
             event.preventDefault();
 
             beforeX = event.clientX;

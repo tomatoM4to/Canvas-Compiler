@@ -1,4 +1,4 @@
-import {konvaSettings} from "@/scripts/content";
+import {konvaState} from "@/app/content";
 
 export default class ContextTemplate {
     private static instance: ContextTemplate;
@@ -11,17 +11,17 @@ export default class ContextTemplate {
     }
 
     resetContextTemplate(template: string) {
-        // @ts-ignore
-        this.context?.innerHTML = template;
-        let c = this.context?.querySelector("#canvas-compiler-delete-button");
+        if (!this.context) return;
+        this.context.innerHTML = template;
+        let deleteButton: HTMLButtonElement | null = this.context?.querySelector("#canvas-compiler-delete-button");
+        if (!deleteButton) return;
 
-        // @ts-ignore
-        c.addEventListener("click", () => {
-            if (konvaSettings.transfomer.nodes().length === 0) return;
-            konvaSettings.transfomer.nodes().forEach((node) => {
+        deleteButton.addEventListener("click", () => {
+            if (konvaState.transfomer.nodes().length === 0) return;
+            konvaState.transfomer.nodes().forEach((node) => {
                 node.destroy();
             })
-            konvaSettings.transfomer.nodes([]);
+            konvaState.transfomer.nodes([]);
         })
     }
 
@@ -32,20 +32,21 @@ export default class ContextTemplate {
 
     updatePos() {
         if (!this.context) return;
-        let menu = this.context.querySelector("#canvas-compiler-menu");
-        // @ts-ignore
+
+        let menu: HTMLDivElement | null = this.context?.querySelector("#canvas-compiler-menu");
+        let pointerPosition = konvaState.stage.getPointerPosition();
+        if (!menu || !pointerPosition) return;
+
         menu.style.display = 'initial';
-        let containerRect = konvaSettings.stage.container().getBoundingClientRect();
-        // @ts-ignore
-        menu.style.top = containerRect.top + konvaSettings.stage.getPointerPosition().y + 4 + 'px';
-        // @ts-ignore
-        menu.style.left = konvaSettings.stage.getPointerPosition().x + 4 + 'px';
+        let containerRect = konvaState.stage.container().getBoundingClientRect();
+        menu.style.top = containerRect.top + pointerPosition.y + 4 + 'px';
+        menu.style.left = pointerPosition.x + 4 + 'px';
     }
 
     displayNone() {
         if (!this.context) return;
-        let menu = this.context.querySelector("#canvas-compiler-menu");
-        // @ts-ignore
+        let menu: HTMLDivElement | null = this.context?.querySelector("#canvas-compiler-menu");
+        if (!menu) return;
         menu.style.display = 'none';
     }
 }

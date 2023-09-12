@@ -1,7 +1,7 @@
 import Konva from "konva";
-import {canvasEditorUi, konvaSettings} from "@/scripts/content";
+import {canvasEditorUi, konvaState} from "@/app/content";
 import {PaletteElements} from "@/components/Pallete";
-import {Command} from "@/components/Toolbar";
+import {Command} from "@/global/Toolbar";
 
 
 export class ComponentCommand implements Command {
@@ -22,23 +22,24 @@ export class Component {
     private isDrawing: boolean = false;
 
     addEvent() {
-        konvaSettings.stage.on("mousedown", this.mousedownHandler);
-        konvaSettings.stage.on("mousemove", this.mousemoveHandler)
-        konvaSettings.stage.on("mouseup", this.mouseupHandler)
+        konvaState.stage.on("mousedown", this.mousedownHandler);
+        konvaState.stage.on("mousemove", this.mousemoveHandler)
+        konvaState.stage.on("mouseup", this.mouseupHandler)
     }
     removeEvent() {
-        konvaSettings.stage.off("mousedown");
-        konvaSettings.stage.off("mousemove");
-        konvaSettings.stage.off("mouseup");
+        konvaState.stage.off("mousedown");
+        konvaState.stage.off("mousemove");
+        konvaState.stage.off("mouseup");
     }
 
     private mousedownHandler() {
+        let pointerPosition = konvaState.stage.getPointerPosition();
+        if (!pointerPosition) return;
+
         this.isDrawing = true;
         this.rect = new Konva.Rect({
-            // @ts-ignore
-            x: konvaSettings.stage.getPointerPosition().x,
-            // @ts-ignore
-            y: konvaSettings.stage.getPointerPosition().y,
+            x: pointerPosition.x,
+            y: pointerPosition.y,
             width: 0,
             height: 0,
             fill: PaletteElements.getInstance().color,
@@ -50,29 +51,25 @@ export class Component {
             strokeWidth: 4,
             id: "primpt",
         })
-        konvaSettings.layer.add(this.rect).batchDraw();
+        konvaState.layer.add(this.rect).batchDraw();
     }
 
     private mouseupHandler() {
-        if (!this.isDrawing) return;
+        if (!this.isDrawing || !this.rect) return;
 
-        // @ts-ignore
-        konvaSettings.transfomer.nodes([this.rect]);
-        // @ts-ignore
+        konvaState.transfomer.nodes([this.rect]);
         canvasEditorUi.updateEditor(this.rect);
         canvasEditorUi.infoSetting(this.rect);
         this.isDrawing = false;
     }
 
     private mousemoveHandler() {
-        if (!this.isDrawing) return false;
-        // @ts-ignore
-        let newWidth = konvaSettings.stage.getPointerPosition().x - this.rect.x();
-        // @ts-ignore
-        let newHeight = konvaSettings.stage.getPointerPosition().y - this.rect.y();
-        // @ts-ignore
+        let pointerPosition = konvaState.stage.getPointerPosition();
+        if (!this.isDrawing || !pointerPosition || !this.rect) return false;
+        let newWidth = pointerPosition.x - this.rect.x();
+        let newHeight = pointerPosition.y - this.rect.y();
         this.rect.width(newWidth).height(newHeight);
-        konvaSettings.layer.batchDraw();
+        konvaState.layer.batchDraw();
     }
 }
 

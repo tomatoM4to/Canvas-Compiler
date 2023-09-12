@@ -1,5 +1,5 @@
-import {Command} from "@/components/Toolbar";
-import {canvasEditorUi, konvaSettings} from "@/scripts/content";
+import {Command} from "@/global/Toolbar";
+import {canvasEditorUi, konvaState} from "@/app/content";
 import Konva from "konva";
 import {PaletteElements} from "@/components/Pallete";
 
@@ -21,13 +21,13 @@ export class TextCommand implements Command {
 
 export class Text {
     addEvent() {
-        konvaSettings.stage.on("click", () => {
-            let pos = konvaSettings.stage.getPointerPosition();
+        konvaState.stage.on("click", () => {
+            let pos = konvaState.stage.getPointerPosition();
             this.createText(pos)
         });
     }
     removeEvent() {
-        konvaSettings.stage.off("click");
+        konvaState.stage.off("click");
     }
 
     createText(pos: any) {
@@ -47,9 +47,9 @@ export class Text {
                 scaleY: 1,
             });
         });
-        konvaSettings.layer.add(text);
+        konvaState.layer.add(text);
         canvasEditorUi.updateEditor(text);
-        konvaSettings.transfomer.nodes([text]);
+        konvaState.transfomer.nodes([text]);
         text.on("dblclick", () => this.dbClickEvent(text));
         canvasEditorUi.infoSetting(text);
     }
@@ -57,16 +57,16 @@ export class Text {
     private dbClickEvent(text: Konva.Text) {
         console.log(`db click`);
         text.hide();
-        konvaSettings.transfomer.hide();
+        konvaState.transfomer.hide();
 
         let textPosition = text.absolutePosition();
 
         let areaPosition = {
-            x: konvaSettings.stage.container().offsetLeft + textPosition.x,
-            y: konvaSettings.stage.container().offsetTop + textPosition.y,
+            x: konvaState.stage.container().offsetLeft + textPosition.x,
+            y: konvaState.stage.container().offsetTop + textPosition.y,
         };
 
-        let textarea = document.createElement('textarea');
+        let textarea: HTMLTextAreaElement = document.createElement('textarea');
         document.body.appendChild(textarea);
 
         textarea.value = text.text();
@@ -83,8 +83,7 @@ export class Text {
         textarea.style.background = 'none';
         textarea.style.outline = 'none';
         textarea.style.resize = 'none';
-        // @ts-ignore
-        textarea.style.lineHeight = text.lineHeight();
+        textarea.style.lineHeight = text.lineHeight().toString();
         textarea.style.fontFamily = text.fontFamily();
         textarea.style.transformOrigin = 'left top';
         textarea.style.textAlign = text.align();
@@ -116,12 +115,12 @@ export class Text {
         textarea.focus();
 
         function removeTextarea() {
-            // @ts-ignore
+            if (!textarea.parentNode) return;
             textarea.parentNode.removeChild(textarea);
             window.removeEventListener('click', handleOutsideClick);
             text.show();
-            konvaSettings.transfomer.show();
-            konvaSettings.transfomer.forceUpdate();
+            konvaState.transfomer.show();
+            konvaState.transfomer.forceUpdate();
         }
 
         function setTextareaWidth(newWidth: any) {

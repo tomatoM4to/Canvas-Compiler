@@ -58,7 +58,7 @@ export class CanvasElements {
             console.log(`canvas up 이벤트`)
         }
 
-        function dragMouseMove(event: any) {
+        function dragMouseMove(event: MouseEvent) {
             event.preventDefault();
 
             dy = oldY - event.clientY;
@@ -67,7 +67,7 @@ export class CanvasElements {
             // modyfyUi.style.height = `${canvas.offsetHeight + dy}px`;
         }
 
-        function dragMouseDown(event: any) {
+        function dragMouseDown(event: MouseEvent) {
             event.preventDefault();
 
             oldY = event.clientY;
