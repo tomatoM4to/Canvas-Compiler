@@ -46,9 +46,9 @@ export class Component {
             draggable: false,
             // Todo: modyfy name
             name: 'rect',
-            cornerRadius: [0, 10, 30, 90],
+            cornerRadius: [0, 0, 0, 0],
             stroke: 'black',
-            strokeWidth: 4,
+            strokeWidth: 0,
             id: "primpt",
         })
         konvaState.layer.add(this.rect).batchDraw();
@@ -66,8 +66,8 @@ export class Component {
     private mousemoveHandler() {
         let pointerPosition = konvaState.stage.getPointerPosition();
         if (!this.isDrawing || !pointerPosition || !this.rect) return false;
-        let newWidth = pointerPosition.x - this.rect.x();
-        let newHeight = pointerPosition.y - this.rect.y();
+        let newWidth = Math.abs(pointerPosition.x - this.rect.x());
+        let newHeight = Math.abs(pointerPosition.y - this.rect.y());
         this.rect.width(newWidth).height(newHeight);
         konvaState.layer.batchDraw();
     }
