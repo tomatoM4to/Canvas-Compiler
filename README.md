@@ -1,4 +1,4 @@
-[Preview](https://youtu.be/PpLBfbGyRwA)
+preview: https://www.youtube.com/watch?v=XVBVnkJ2WD0&list=PLWtl-Pza2_e2Aadh0oNqkhlydwOyIAu3c
 
 # Canvas Compiler
 그래픽 데이터를 LLM이 이해할 수 있는 자연어로 변환하는 크롬 확장 프로그램입니다.
